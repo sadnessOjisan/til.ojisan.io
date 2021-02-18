@@ -8,6 +8,8 @@ import {
   PostFireStoreFieldType,
   TagFireStoreFieldType,
 } from "./types/firestore";
+import * as marked from "marked";
+import * as sanitizeHtml from "sanitize-html";
 
 admin.initializeApp(functions.config().firebase);
 
@@ -115,10 +117,12 @@ export const getAllPosts = functions
             return tagData.name;
           });
           Promise.all(tagNames).then((tagNames) => {
+            const html = marked(post.content);
+            const cleanHtml = sanitizeHtml(html);
             response.status(200).json({
               id: doc.id,
               title: post.title,
-              content: post.content,
+              content: cleanHtml,
               timeStamp: post.timeStamp.toDate().toISOString(),
               tags: tagNames,
             });
