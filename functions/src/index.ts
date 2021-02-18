@@ -22,6 +22,12 @@ const db = admin.firestore();
 export const saveTil = functions
   .region("asia-northeast1")
   .https.onRequest((request, response) => {
+    response.set("Access-Control-Allow-Origin", "http://localhost:8000");
+    response.set(
+      "Access-Control-Allow-Methods",
+      "GET, HEAD, OPTIONS, POST, DELETE"
+    );
+    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
     if (request.method !== "POST") {
       response
         .status(400)
@@ -94,6 +100,12 @@ export const saveTil = functions
 export const getAllPosts = functions
   .region("asia-northeast1")
   .https.onRequest((request, response) => {
+    response.set("Access-Control-Allow-Origin", "http://localhost:8000");
+    response.set(
+      "Access-Control-Allow-Methods",
+      "GET, HEAD, OPTIONS, POST, DELETE"
+    );
+    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
     db.collection(COLLECTION_KEY.POSTS)
       .get()
       .then((snapshot) => {
