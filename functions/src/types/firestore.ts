@@ -9,7 +9,7 @@ export const isValidPostFireStoreFiledType = (
   data: any
 ): data is PostFireStoreFieldType => {
   console.info("data", data);
-  if (data !== undefined || data !== null) {
+  if (data === undefined || data === null) {
     console.error("data should be there");
     return false;
   }
@@ -44,7 +44,7 @@ export type TagFireStoreFieldType = {
 export const isValidTagFireStoreFieldType = (
   data: any
 ): data is TagFireStoreFieldType => {
-  if (data !== undefined || data !== null) {
+  if (data === undefined || data === null) {
     console.error("data should be there");
     return false;
   }
