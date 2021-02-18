@@ -98,7 +98,7 @@ export const getAllPosts = functions
         snapshot.docs.map((doc) => {
           const post = doc.data();
           if (!isValidPostFireStoreFiledType(post)) {
-            console.error(`${post} is invalid data.`);
+            console.error(`${JSON.stringify(post)} is invalid data.`);
             response.status(500).json({ error: "internal database error" });
             return;
           }
@@ -106,7 +106,7 @@ export const getAllPosts = functions
           const tagNames = tagRefs.map(async (ref) => {
             const tagData = await ref.get();
             if (!isValidTagFireStoreFieldType(tagData)) {
-              console.error(`${tagData} is invalid data.`);
+              console.error(`${JSON.stringify(tagData)} is invalid data.`);
               response.status(500).json({ error: "internal database error" });
               throw new Error("invalid tagData");
             }
