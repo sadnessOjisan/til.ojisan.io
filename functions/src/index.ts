@@ -30,12 +30,14 @@ export const saveTil = functions
     fireStore
       .collection(COLLECTION_KEY.POSTS)
       .add(body)
+      .then(() => {
+        response.status(200).json("success");
+      })
       .catch((e) => {
         console.error(e);
         response.status(500).json({ error: "firebase error" });
         return;
       });
-    response.status(200).json("success");
   });
 
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
