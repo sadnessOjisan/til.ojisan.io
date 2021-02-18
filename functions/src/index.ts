@@ -119,7 +119,7 @@ export const getAllPosts = functions
               id: doc.id,
               title: post.title,
               content: post.content,
-              timeStamp: post.timeStamp,
+              timeStamp: post.timeStamp.toDate().toISOString(),
               tags: tagNames,
             });
           });

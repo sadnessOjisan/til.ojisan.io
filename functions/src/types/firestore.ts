@@ -5,9 +5,16 @@ export type PostFireStoreFieldType = {
   tagRefs: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>[];
 };
 
+export type PostFireStoreFieldResponseType = {
+  title: string;
+  content: string; // markdown
+  timeStamp: FirebaseFirestore.Timestamp;
+  tagRefs: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>[];
+};
+
 export const isValidPostFireStoreFiledType = (
   data: any
-): data is PostFireStoreFieldType => {
+): data is PostFireStoreFieldResponseType => {
   console.info("data", data);
   if (data === undefined || data === null) {
     console.error("data should be there");
@@ -39,6 +46,11 @@ export const isValidPostFireStoreFiledType = (
 export type TagFireStoreFieldType = {
   name: string;
   timeStamp: FirebaseFirestore.FieldValue;
+};
+
+export type TagFireStoreFieldResponseType = {
+  name: string;
+  timeStamp: FirebaseFirestore.Timestamp;
 };
 
 export const isValidTagFireStoreFieldType = (
