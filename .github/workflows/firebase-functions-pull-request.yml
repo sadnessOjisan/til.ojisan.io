@@ -12,9 +12,6 @@ jobs:
         working-directory: ./functions
         run: |
           npm install
-      - name: build
-        working-directory: ./functions
-        run: npm run build:function
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
