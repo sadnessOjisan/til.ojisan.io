@@ -1,9 +1,11 @@
-type PostFireStoreFieldType = {
+export type PostFireStoreFieldType = {
+  title: string;
   content: string; // markdown
-  timeStamp: string;
-  tagId: string; // ref
+  timeStamp: FirebaseFirestore.FieldValue;
+  tagRefs: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>[];
 };
 
-type TagFireStoreFieldType = {
+export type TagFireStoreFieldType = {
   name: string;
+  timeStamp: FirebaseFirestore.FieldValue;
 };

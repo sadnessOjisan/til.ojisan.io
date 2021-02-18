@@ -2,11 +2,15 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { SaveRequest } from "./types/request";
 import { COLLECTION_KEY } from "./const/FirestoreCollectionKey";
+import {
+  PostFireStoreFieldType,
+  TagFireStoreFieldType,
+} from "./types/firestore";
 
 admin.initializeApp(functions.config().firebase);
 
 // データベースの参照を作成
-const fireStore = admin.firestore();
+const db = admin.firestore();
 
 /**
  * TILの保存
@@ -28,31 +32,34 @@ export const saveTil = functions
 
     const body = request.body;
 
-    const createdTagIds: string[] = [];
+    const createdTagRefs: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>[] = [];
     let promises: Promise<void>[];
     // tag の保存
     try {
       promises = body.tags.map(async (tag) => {
         // 既存 tag が無い時だけ作成する
         const tagName = tag;
-        const snapshot = await fireStore
-          .collection("tags")
+        const snapshot = await db
+          .collection(COLLECTION_KEY.TAGS)
           .where("name", "==", tagName)
           .get();
         if (snapshot.empty) {
-          const tagData = { name: tag };
-          const createdTagRef = await fireStore
+          const tagData: TagFireStoreFieldType = {
+            name: tag,
+            timeStamp: admin.firestore.FieldValue.serverTimestamp(),
+          };
+          const createdTagRef = await db
             .collection(COLLECTION_KEY.TAGS)
             .add(tagData);
-          const id = createdTagRef.id;
-          createdTagIds.push(id);
+          const ref = createdTagRef;
+          createdTagRefs.push(ref);
         } else {
-          const ids = snapshot.docs.map((d) => d.id);
+          const ids = snapshot.docs.map((d) => d.ref);
           if (ids.length !== 1) {
             throw new Error("invalid data");
           }
           const id = ids[0];
-          createdTagIds.push(id);
+          createdTagRefs.push(id);
         }
       });
     } catch (e) {
@@ -61,14 +68,15 @@ export const saveTil = functions
       return;
     }
     Promise.all(promises).then(async () => {
-      const postBody = {
+      const postBody: PostFireStoreFieldType = {
         content: body.content,
-        tags: createdTagIds,
+        timeStamp: admin.firestore.FieldValue.serverTimestamp(),
+        tagRefs: createdTagRefs,
       };
 
       // post の保存
       try {
-        await fireStore.collection(COLLECTION_KEY.POSTS).add(postBody);
+        await db.collection(COLLECTION_KEY.POSTS).add(postBody);
         response.status(204).json("success");
       } catch (e) {
         console.error(e);
@@ -80,6 +88,10 @@ export const saveTil = functions
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
   if (!body) {
     console.error("should not empty");
+    return false;
+  }
+  if (typeof body.title !== "string") {
+    console.error("should be string");
     return false;
   }
   if (typeof body.content !== "string") {
