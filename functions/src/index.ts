@@ -181,6 +181,6 @@ export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
 };
 
 function isValidDmain(host: string) {
-  const VALID_LIST = ["http://localhost:8000"];
+  const VALID_LIST = ["http://localhost:8080"];
   return VALID_LIST.includes(host);
 }
