@@ -3,7 +3,7 @@
 ## test
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"Name":"sensuikan1973", "Age":"100"}' https://asia-northeast1-til-ojisan-io-a47a1.cloudfunctions.net/saveTil
+curl -X post -H "Content-Type: application/json" -d '{"content":"222", "tags": ["2"], "title":"aaaa"}' https://asia-northeast1-til-ojisan-io-a47a1.cloudfunctions.net/saveTil
 ```
 
 ## TODO

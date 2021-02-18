@@ -69,6 +69,7 @@ export const saveTil = functions
     }
     Promise.all(promises).then(async () => {
       const postBody: PostFireStoreFieldType = {
+        title: body.title,
         content: body.content,
         timeStamp: admin.firestore.FieldValue.serverTimestamp(),
         tagRefs: createdTagRefs,
@@ -77,7 +78,7 @@ export const saveTil = functions
       // post の保存
       try {
         await db.collection(COLLECTION_KEY.POSTS).add(postBody);
-        response.status(204).json("success");
+        response.status(200).json("success");
       } catch (e) {
         console.error(e);
         response.status(500).json({ error: "fail to save post" });
