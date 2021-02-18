@@ -112,7 +112,8 @@ export const saveTil = functions
 export const getAllPosts = functions
   .region("asia-northeast1")
   .https.onRequest(async (request, response) => {
-    const host = request.headers.host;
+    console.log(JSON.stringify(request.headers));
+    const host = request.headers.from;
     if (host === undefined) {
       response.status(400).json({ error: "host is undefined" });
       throw new Error("invalid tagData");
