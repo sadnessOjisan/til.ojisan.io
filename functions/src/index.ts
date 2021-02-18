@@ -41,19 +41,24 @@ export const saveTil = functions
         .json({ error: `${request.method} is invalid method` });
       return;
     }
-    if (!_isValidSaveRequestBody(request.body)) {
+    try {
+      JSON.parse(request.body);
+    } catch (e) {
+      response.status(400).json({ error: `${request.body} cannot parse` });
+      throw new Error("");
+    }
+    const parsedBody = JSON.parse(request.body);
+    if (!_isValidSaveRequestBody(parsedBody)) {
       console.error(`${JSON.stringify(request.body)} is invalid request`);
       response.status(400).json({ error: "invalid request" });
       return;
     }
 
-    const body = request.body;
-
     const createdTagRefs: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>[] = [];
     let promises: Promise<void>[];
     // tag の保存
     try {
-      promises = body.tags.map(async (tag) => {
+      promises = parsedBody.tags.map(async (tag) => {
         // 既存 tag が無い時だけ作成する
         const tagName = tag;
         const snapshot = await db
@@ -86,8 +91,8 @@ export const saveTil = functions
     }
     Promise.all(promises).then(async () => {
       const postBody: PostFireStoreFieldType = {
-        title: body.title,
-        content: body.content,
+        title: parsedBody.title,
+        content: parsedBody.content,
         timeStamp: admin.firestore.FieldValue.serverTimestamp(),
         tagRefs: createdTagRefs,
       };
