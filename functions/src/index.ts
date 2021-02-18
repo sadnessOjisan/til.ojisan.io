@@ -150,19 +150,22 @@ export const getAllPosts = functions
             }
             return tagData.name;
           });
-          Promise.all(tagNames).then((tagNames) => {
-            const html = marked(post.content);
-            const cleanHtml = sanitizeHtml(html);
-            data.push({
-              id: doc.id,
-              title: post.title,
-              content: cleanHtml,
-              timeStamp: post.timeStamp.toDate().toISOString(),
-              tags: tagNames,
+          Promise.all(tagNames)
+            .then((tagNames) => {
+              const html = marked(post.content);
+              const cleanHtml = sanitizeHtml(html);
+              data.push({
+                id: doc.id,
+                title: post.title,
+                content: cleanHtml,
+                timeStamp: post.timeStamp.toDate().toISOString(),
+                tags: tagNames,
+              });
+            })
+            .then(() => {
+              response.status(200).json(data);
             });
-          });
         }
-        response.status(200).json(data);
       });
   });
 
