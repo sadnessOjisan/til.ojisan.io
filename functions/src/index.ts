@@ -111,7 +111,7 @@ export const saveTil = functions
 //   tilを全て取得
 export const getAllPosts = functions
   .region("asia-northeast1")
-  .https.onRequest((request, response) => {
+  .https.onRequest(async (request, response) => {
     const host = request.headers.host;
     if (host === undefined) {
       response.status(400).json({ error: "host is undefined" });
@@ -125,7 +125,9 @@ export const getAllPosts = functions
       "GET, HEAD, OPTIONS, POST, DELETE"
     );
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
-    db.collection(COLLECTION_KEY.POSTS)
+    let data: any = [];
+    await db
+      .collection(COLLECTION_KEY.POSTS)
       .get()
       .then((snapshot) => {
         const docs = snapshot.docs;
@@ -150,7 +152,7 @@ export const getAllPosts = functions
           Promise.all(tagNames).then((tagNames) => {
             const html = marked(post.content);
             const cleanHtml = sanitizeHtml(html);
-            response.status(200).json({
+            data.push({
               id: doc.id,
               title: post.title,
               content: cleanHtml,
@@ -160,6 +162,7 @@ export const getAllPosts = functions
           });
         }
       });
+    response.status(200).json(data);
   });
 
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
