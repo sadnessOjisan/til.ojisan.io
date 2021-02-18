@@ -94,8 +94,9 @@ export const getAllPosts = functions
   .https.onRequest((request, response) => {
     db.collection(COLLECTION_KEY.POSTS)
       .get()
-      .then((snapshot) =>
-        snapshot.docs.map((doc) => {
+      .then((snapshot) => {
+        const docs = snapshot.docs;
+        for (let doc of docs) {
           const post = doc.data();
           if (!isValidPostFireStoreFiledType(post)) {
             console.error(`${JSON.stringify(post)} is invalid data.`);
@@ -114,16 +115,16 @@ export const getAllPosts = functions
             return tagData.name;
           });
           Promise.all(tagNames).then((tagNames) => {
-            return {
+            response.status(200).json({
               id: doc.id,
               title: post.title,
               content: post.content,
               timeStamp: post.timeStamp,
               tags: tagNames,
-            };
+            });
           });
-        })
-      );
+        }
+      });
   });
 
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
