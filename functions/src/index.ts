@@ -125,12 +125,12 @@ export const getAllPosts = functions
       "GET, HEAD, OPTIONS, POST, DELETE"
     );
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
-    let data: any = [];
     await db
       .collection(COLLECTION_KEY.POSTS)
       .get()
       .then((snapshot) => {
         const docs = snapshot.docs;
+        let data: any = [];
         for (let doc of docs) {
           const post = doc.data();
           if (!isValidPostFireStoreFiledType(post)) {
@@ -161,8 +161,8 @@ export const getAllPosts = functions
             });
           });
         }
+        response.status(200).json(data);
       });
-    response.status(200).json(data);
   });
 
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
