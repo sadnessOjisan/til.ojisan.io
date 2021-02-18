@@ -14,7 +14,7 @@ const fireStore = admin.firestore();
 export const saveTil = functions
   .region("asia-northeast1")
   .https.onRequest((request, response) => {
-    if (request.method !== "post") {
+    if (request.method !== "POST") {
       response
         .status(400)
         .json({ error: `${request.method} is invalid method` });
