@@ -20,6 +20,8 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
+    "@types/marked": "^1.2.2",
+    "@types/sanitize-html": "^1.27.1",
     "firebase-functions-test": "^0.2.0",
     "typescript": "^3.8.0"
   },
