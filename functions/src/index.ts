@@ -22,7 +22,14 @@ const db = admin.firestore();
 export const saveTil = functions
   .region("asia-northeast1")
   .https.onRequest((request, response) => {
-    response.set("Access-Control-Allow-Origin", "http://localhost:8000");
+    const host = request.headers.host;
+    if (host === undefined) {
+      response.status(400).json({ error: "host is undefined" });
+      throw new Error("invalid tagData");
+    }
+    if (isValidDmain(host)) {
+      response.set("Access-Control-Allow-Origin", host);
+    }
     response.set(
       "Access-Control-Allow-Methods",
       "GET, HEAD, OPTIONS, POST, DELETE"
@@ -100,7 +107,14 @@ export const saveTil = functions
 export const getAllPosts = functions
   .region("asia-northeast1")
   .https.onRequest((request, response) => {
-    response.set("Access-Control-Allow-Origin", "http://localhost:8000");
+    const host = request.headers.host;
+    if (host === undefined) {
+      response.status(400).json({ error: "host is undefined" });
+      throw new Error("invalid tagData");
+    }
+    if (isValidDmain(host)) {
+      response.set("Access-Control-Allow-Origin", host);
+    }
     response.set(
       "Access-Control-Allow-Methods",
       "GET, HEAD, OPTIONS, POST, DELETE"
@@ -165,3 +179,8 @@ export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
   }
   return true;
 };
+
+function isValidDmain(host: string) {
+  const VALID_LIST = ["http://localhost:8000"];
+  return VALID_LIST.includes(host);
+}
