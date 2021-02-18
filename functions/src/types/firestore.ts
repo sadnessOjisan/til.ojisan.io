@@ -21,16 +21,17 @@ export const isValidPostFireStoreFiledType = (
     console.error("should be string");
     return false;
   }
-  if (typeof data.timeStamp !== "string") {
-    console.error("should be string");
+  if (data.timeStamp.toDate()) {
+  }
+  try {
+    data.timeStamp.toDate();
+  } catch (e) {
+    console.error("should impl toDate()");
     return false;
   }
   if (!Array.isArray(data.tagRefs)) {
     console.error("should be string");
     return false;
-  }
-  for (let tag of data.tagRefs) {
-    if (typeof tag !== "string") return false;
   }
   return true;
 };
