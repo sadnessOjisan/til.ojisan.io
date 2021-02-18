@@ -3,6 +3,8 @@ import * as admin from "firebase-admin";
 import { SaveRequest } from "./types/request";
 import { COLLECTION_KEY } from "./const/FirestoreCollectionKey";
 import {
+  isValidPostFireStoreFiledType,
+  isValidTagFireStoreFieldType,
   PostFireStoreFieldType,
   TagFireStoreFieldType,
 } from "./types/firestore";
@@ -84,6 +86,43 @@ export const saveTil = functions
         response.status(500).json({ error: "fail to save post" });
       }
     });
+  });
+
+//   tilを全て取得
+export const getAllPosts = functions
+  .region("asia-northeast1")
+  .https.onRequest((request, response) => {
+    db.collection(COLLECTION_KEY.POSTS)
+      .get()
+      .then((snapshot) =>
+        snapshot.docs.map((doc) => {
+          const post = doc.data();
+          if (!isValidPostFireStoreFiledType(post)) {
+            console.error(`${post} is invalid data.`);
+            response.status(500).json({ error: "internal database error" });
+            return;
+          }
+          const tagRefs = post.tagRefs;
+          const tagNames = tagRefs.map(async (ref) => {
+            const tagData = await ref.get();
+            if (!isValidTagFireStoreFieldType(tagData)) {
+              console.error(`${tagData} is invalid data.`);
+              response.status(500).json({ error: "internal database error" });
+              throw new Error("invalid tagData");
+            }
+            return tagData.name;
+          });
+          Promise.all(tagNames).then((tagNames) => {
+            return {
+              id: doc.id,
+              title: post.title,
+              content: post.content,
+              timeStamp: post.timeStamp,
+              tags: tagNames,
+            };
+          });
+        })
+      );
   });
 
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
