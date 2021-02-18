@@ -11,28 +11,32 @@ const fireStore = admin.firestore();
 /**
  * TILの保存
  */
-export const saveTil = functions.https.onRequest((request, response) => {
-  if (request.method !== "post") {
-    response.status(400).json({ error: `${request.method} is invalid method` });
-    return;
-  }
-  if (!_isValidSaveRequestBody(request.body)) {
-    console.error(`${JSON.stringify(request.body)} is invalid request`);
-    response.status(400).json({ error: "invalid request" });
-    return;
-  }
-
-  const body = request.body;
-  fireStore
-    .collection(COLLECTION_KEY.POSTS)
-    .add(body)
-    .catch((e) => {
-      console.error(e);
-      response.status(500).json({ error: "firebase error" });
+export const saveTil = functions
+  .region("asia-northeast1")
+  .https.onRequest((request, response) => {
+    if (request.method !== "post") {
+      response
+        .status(400)
+        .json({ error: `${request.method} is invalid method` });
       return;
-    });
-  response.status(200).json("success");
-});
+    }
+    if (!_isValidSaveRequestBody(request.body)) {
+      console.error(`${JSON.stringify(request.body)} is invalid request`);
+      response.status(400).json({ error: "invalid request" });
+      return;
+    }
+
+    const body = request.body;
+    fireStore
+      .collection(COLLECTION_KEY.POSTS)
+      .add(body)
+      .catch((e) => {
+        console.error(e);
+        response.status(500).json({ error: "firebase error" });
+        return;
+      });
+    response.status(200).json("success");
+  });
 
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
   if (!body) {
