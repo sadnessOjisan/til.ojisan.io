@@ -49,13 +49,13 @@ export const isValidTagFireStoreFieldType = (
     return false;
   }
   if (typeof data.name !== "string") {
-    console.error("should be string");
+    console.error("name should be string");
     return false;
   }
   try {
     data.timeStamp.toDate();
   } catch (e) {
-    console.error("should impl toDate()");
+    console.error("timeStamp should impl toDate()");
     return false;
   }
   return true;

@@ -104,7 +104,8 @@ export const getAllPosts = functions
           }
           const tagRefs = post.tagRefs;
           const tagNames = tagRefs.map(async (ref) => {
-            const tagData = await ref.get();
+            const tagDoc = await ref.get();
+            const tagData = tagDoc.data();
             if (!isValidTagFireStoreFieldType(tagData)) {
               console.error(`${JSON.stringify(tagData)} is invalid data.`);
               response.status(500).json({ error: "internal database error" });
