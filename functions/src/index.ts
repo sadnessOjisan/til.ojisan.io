@@ -47,8 +47,8 @@ const _isValidSaveRequestBody = (req: any): req is SaveRequest => {
     console.error("should be array string");
     return false;
   }
-  req.tags.forEach((tag: unknown) => {
+  for (let tag of req.tags) {
     if (typeof tag !== "string") return false;
-  });
+  }
   return true;
 };
