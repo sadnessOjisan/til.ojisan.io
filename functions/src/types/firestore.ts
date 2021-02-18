@@ -52,8 +52,10 @@ export const isValidTagFireStoreFieldType = (
     console.error("should be string");
     return false;
   }
-  if (typeof data.timeStamp !== "string") {
-    console.error("should be string");
+  try {
+    data.timeStamp.toDate();
+  } catch (e) {
+    console.error("should impl toDate()");
     return false;
   }
   return true;
