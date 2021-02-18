@@ -120,6 +120,7 @@ export const getAllPosts = functions
     if (isValidDmain(host)) {
       response.set("Access-Control-Allow-Origin", host);
     }
+
     response.set(
       "Access-Control-Allow-Methods",
       "GET, HEAD, OPTIONS, POST, DELETE"
@@ -189,6 +190,7 @@ export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
 };
 
 function isValidDmain(host: string) {
+  console.log("host", host);
   const VALID_LIST = ["http://localhost:8080"];
   return VALID_LIST.includes(host);
 }
