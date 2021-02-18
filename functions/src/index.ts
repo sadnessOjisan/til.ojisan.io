@@ -27,17 +27,54 @@ export const saveTil = functions
     }
 
     const body = request.body;
-    fireStore
-      .collection(COLLECTION_KEY.POSTS)
-      .add(body)
-      .then(() => {
-        response.status(200).json("success");
-      })
-      .catch((e) => {
-        console.error(e);
-        response.status(500).json({ error: "firebase error" });
-        return;
+
+    const createdTagIds: string[] = [];
+    let promises: Promise<void>[];
+    // tag の保存
+    try {
+      promises = body.tags.map(async (tag) => {
+        // 既存 tag が無い時だけ作成する
+        const tagName = tag;
+        const snapshot = await fireStore
+          .collection("tags")
+          .where("name", "==", tagName)
+          .get();
+        if (snapshot.empty) {
+          const tagData = { name: tag };
+          const createdTagRef = await fireStore
+            .collection(COLLECTION_KEY.TAGS)
+            .add(tagData);
+          const id = createdTagRef.id;
+          createdTagIds.push(id);
+        } else {
+          const ids = snapshot.docs.map((d) => d.id);
+          if (ids.length !== 1) {
+            throw new Error("invalid data");
+          }
+          const id = ids[0];
+          createdTagIds.push(id);
+        }
       });
+    } catch (e) {
+      console.error(e);
+      response.status(500).json({ error: "fail to save tags" });
+      return;
+    }
+    Promise.all(promises).then(async () => {
+      const postBody = {
+        content: body.content,
+        tags: createdTagIds,
+      };
+
+      // post の保存
+      try {
+        await fireStore.collection(COLLECTION_KEY.POSTS).add(postBody);
+        response.status(204).json("success");
+      } catch (e) {
+        console.error(e);
+        response.status(500).json({ error: "fail to save post" });
+      }
+    });
   });
 
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
