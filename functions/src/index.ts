@@ -34,20 +34,20 @@ export const saveTil = functions.https.onRequest((request, response) => {
   response.status(200).json("success");
 });
 
-const _isValidSaveRequestBody = (req: any): req is SaveRequest => {
-  if (!req) {
+export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
+  if (!body) {
     console.error("should not empty");
     return false;
   }
-  if (typeof req.content !== "string") {
+  if (typeof body.content !== "string") {
     console.error("should be string");
     return false;
   }
-  if (!Array.isArray(req.tags)) {
+  if (!Array.isArray(body.tags)) {
     console.error("should be array string");
     return false;
   }
-  for (let tag of req.tags) {
+  for (let tag of body.tags) {
     if (typeof tag !== "string") return false;
   }
   return true;
