@@ -12,11 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install npm packages
+        working-directory: ./functions
         run: |
-          cd functions
           npm install
-      - name: build
-        run: npm run build:function
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
