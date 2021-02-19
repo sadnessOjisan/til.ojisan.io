@@ -10,10 +10,9 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm install
       - run: npm run build:next
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
         with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIL_OJISAN_IO_A47A1 }}"
-          projectId: til-ojisan-io-a47a1
+          args: deploy --only hosting --project=dev
         env:
-          FIREBASE_CLI_PREVIEWS: hostingchannels
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_DEV }}
