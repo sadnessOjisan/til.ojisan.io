@@ -11,10 +11,21 @@ import {
 
 export default (postsResponse: { data: PostResponse }) => {
   const { data } = postsResponse;
+  const post = toPostFromResponse(data);
+  const { title, tags, content, timeStamp } = post;
+  const YYYYMMDD = `${timeStamp.getFullYear()}/${
+    timeStamp.getMonth() + 1
+  }/${timeStamp.getDate()}`;
   return (
     <div>
-      {data.id}
-      {data.content}
+      <h1>{title}</h1>
+      <div>{YYYYMMDD}</div>
+      <div>
+        {tags.map((tag) => (
+          <span>{tag}</span>
+        ))}
+      </div>
+      <div dangerouslySetInnerHTML={{ __html: content }}></div>
     </div>
   );
 };
