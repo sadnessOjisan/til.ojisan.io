@@ -215,6 +215,27 @@ export const isValidRequestId = (data: any): data is string => {
   return true;
 };
 
+export const getAllPpostIds = functions
+  .region("asia-northeast1")
+  .https.onRequest(async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
+    response.set(
+      "Access-Control-Allow-Methods",
+      "GET, HEAD, OPTIONS, POST, DELETE"
+    );
+    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    await db
+      .collection(COLLECTION_KEY.POSTS)
+      .get()
+      .then((snapshot) => {
+        const docs = snapshot.docs;
+        const ids = docs.map((doc) => {
+          return doc.id;
+        });
+        response.status(200).json(ids);
+      });
+  });
+
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
   if (!body) {
     console.error("should not empty");
