@@ -20,4 +20,4 @@ curl -X post -H "Content-Type: application/json" -d '{"content":"222", "tags": [
 - [ ] スタイリング
 - [ ] export
 - [ ] re-deploy
-- [ ] 開発環境を作る
+- [x] 開発環境を作る
