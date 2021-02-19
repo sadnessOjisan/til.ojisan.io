@@ -3,9 +3,13 @@ import * as admin from "firebase-admin";
 import { SaveRequest } from "./types/request";
 import { COLLECTION_KEY } from "./const/FirestoreCollectionKey";
 import {
+  isValidPostFireStoreFiledType,
+  isValidTagFireStoreFieldType,
   PostFireStoreFieldType,
   TagFireStoreFieldType,
 } from "./types/firestore";
+import * as marked from "marked";
+import * as sanitizeHtml from "sanitize-html";
 
 admin.initializeApp(functions.config().firebase);
 
@@ -18,25 +22,36 @@ const db = admin.firestore();
 export const saveTil = functions
   .region("asia-northeast1")
   .https.onRequest((request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
+    response.set(
+      "Access-Control-Allow-Methods",
+      "GET, HEAD, OPTIONS, POST, DELETE"
+    );
+    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
     if (request.method !== "POST") {
       response
         .status(400)
         .json({ error: `${request.method} is invalid method` });
       return;
     }
-    if (!_isValidSaveRequestBody(request.body)) {
+    try {
+      JSON.parse(request.body);
+    } catch (e) {
+      response.status(400).json({ error: `${request.body} cannot parse` });
+      throw new Error("");
+    }
+    const parsedBody = JSON.parse(request.body);
+    if (!_isValidSaveRequestBody(parsedBody)) {
       console.error(`${JSON.stringify(request.body)} is invalid request`);
       response.status(400).json({ error: "invalid request" });
       return;
     }
 
-    const body = request.body;
-
     const createdTagRefs: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>[] = [];
     let promises: Promise<void>[];
     // tag の保存
     try {
-      promises = body.tags.map(async (tag) => {
+      promises = parsedBody.tags.map(async (tag) => {
         // 既存 tag が無い時だけ作成する
         const tagName = tag;
         const snapshot = await db
@@ -69,8 +84,8 @@ export const saveTil = functions
     }
     Promise.all(promises).then(async () => {
       const postBody: PostFireStoreFieldType = {
-        title: body.title,
-        content: body.content,
+        title: parsedBody.title,
+        content: parsedBody.content,
         timeStamp: admin.firestore.FieldValue.serverTimestamp(),
         tagRefs: createdTagRefs,
       };
@@ -84,6 +99,56 @@ export const saveTil = functions
         response.status(500).json({ error: "fail to save post" });
       }
     });
+  });
+
+//   tilを全て取得
+export const getAllPosts = functions
+  .region("asia-northeast1")
+  .https.onRequest(async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
+    response.set(
+      "Access-Control-Allow-Methods",
+      "GET, HEAD, OPTIONS, POST, DELETE"
+    );
+    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    await db
+      .collection(COLLECTION_KEY.POSTS)
+      .get()
+      .then((snapshot) => {
+        const docs = snapshot.docs;
+        const promises = docs.map((doc) => {
+          const post = doc.data();
+          if (!isValidPostFireStoreFiledType(post)) {
+            console.error(`${JSON.stringify(post)} is invalid data.`);
+            response.status(500).json({ error: "internal database error" });
+            throw new Error("invalid data");
+          }
+          const tagRefs = post.tagRefs;
+          const tagNames = tagRefs.map(async (ref) => {
+            const tagDoc = await ref.get();
+            const tagData = tagDoc.data();
+            if (!isValidTagFireStoreFieldType(tagData)) {
+              console.error(`${JSON.stringify(tagData)} is invalid data.`);
+              response.status(500).json({ error: "internal database error" });
+              throw new Error("invalid tagData");
+            }
+            return tagData.name;
+          });
+          const innerPromises = Promise.all(tagNames).then((tagNames) => {
+            const html = marked(post.content);
+            const cleanHtml = sanitizeHtml(html);
+            return {
+              id: doc.id,
+              title: post.title,
+              content: cleanHtml,
+              timeStamp: post.timeStamp.toDate().toISOString(),
+              tags: tagNames,
+            };
+          });
+          return innerPromises;
+        });
+        Promise.all(promises).then((data) => response.status(200).json(data));
+      });
   });
 
 export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
