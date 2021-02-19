@@ -8,10 +8,10 @@ curl -X post -H "Content-Type: application/json" -d '{"content":"222", "tags": [
 
 ## TODO
 
-- [ ] firestore と接続
+- [x] firestore と接続
 - [ ] swagger 的なの作る
-- [ ] markdown で保存
-- [ ] サニタイズ
+- [x] markdown で保存
+- [x] サニタイズ
 - [ ] 個別記事
 - [ ] 記事一覧
 - [ ] カテゴリ一覧
@@ -20,3 +20,4 @@ curl -X post -H "Content-Type: application/json" -d '{"content":"222", "tags": [
 - [ ] スタイリング
 - [ ] export
 - [ ] re-deploy
+- [ ] 開発環境を作る
