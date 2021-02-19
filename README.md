@@ -3,7 +3,7 @@
 ## test
 
 ```
-curl -X post -H "Content-Type: application/json" -d '{"content":"222", "tags": ["2"], "title":"aaaa"}' https://asia-northeast1-til-ojisan-io-a47a1.cloudfunctions.net/saveTil
+curl -X post -H "Content-Type: application/json" -d '{"content":"222", "tags": ["2"], "title":"aaaa"}' https://asia-northeast1-til-ojisan-io-ac456.cloudfunctions.net/saveTil
 ```
 
 ## TODO
@@ -20,4 +20,4 @@ curl -X post -H "Content-Type: application/json" -d '{"content":"222", "tags": [
 - [ ] スタイリング
 - [ ] export
 - [ ] re-deploy
-- [ ] 開発環境を作る
+- [x] 開発環境を作る
