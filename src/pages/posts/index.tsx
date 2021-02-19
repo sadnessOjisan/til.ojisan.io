@@ -8,14 +8,23 @@ export default (postsResponse: { data: PostsResponse }) => {
   const posts = postsResponse.data.map((res) => toPostFromResponse(res));
   return posts.map((post) => (
     <Link href={`posts/${post.id}`}>
-      <a>{post.id}</a>
+      <a>
+        <div>
+          <h2>{post.title}</h2>
+          <div>
+            {post.tags.map((tag) => (
+              <span>{tag}</span>
+            ))}
+          </div>
+        </div>
+      </a>
     </Link>
   ));
 };
 
-export async function getStaticProps(
-  context
-): Promise<GetStaticPropsResult<{ data: PostsResponse }>> {
+export async function getStaticProps(): Promise<
+  GetStaticPropsResult<{ data: PostsResponse }>
+> {
   const response = await fetch(
     "https://asia-northeast1-til-ojisan-io-dev-ac456.cloudfunctions.net/getAllPosts"
   ); // change env

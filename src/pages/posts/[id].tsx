@@ -1,12 +1,9 @@
 import { GetStaticPropsResult } from "next";
-import { useEffect, useState } from "react";
 import { toPostFromResponse } from "../../../types/model";
 import {
   isValidPostIdsResponse,
   isValidPostResponse,
-  isValidPostsResponse,
   PostResponse,
-  PostsResponse,
 } from "../../../types/response";
 
 export default (postsResponse: { data: PostResponse }) => {
