@@ -1,11 +1,16 @@
 import { GetStaticPropsResult } from "next";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toPostFromResponse } from "../../../types/model";
 import { isValidPostsResponse, PostsResponse } from "../../../types/response";
 
 export default (postsResponse: { data: PostsResponse }) => {
   const posts = postsResponse.data.map((res) => toPostFromResponse(res));
-  return <div>{posts.map((post) => post.id)}</div>;
+  return posts.map((post) => (
+    <Link href={`posts/${post.id}`}>
+      <a>{post.id}</a>
+    </Link>
+  ));
 };
 
 export async function getStaticProps(

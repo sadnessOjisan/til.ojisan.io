@@ -2,6 +2,7 @@ import { GetStaticPropsResult } from "next";
 import { useEffect, useState } from "react";
 import { toPostFromResponse } from "../../../types/model";
 import {
+  isValidPostIdsResponse,
   isValidPostResponse,
   isValidPostsResponse,
   PostResponse,
@@ -10,13 +11,36 @@ import {
 
 export default (postsResponse: { data: PostResponse }) => {
   const { data } = postsResponse;
-  return <div>{data.id}</div>;
+  return (
+    <div>
+      {data.id}
+      {data.content}
+    </div>
+  );
 };
+
+export async function getStaticPaths() {
+  // Call an external API endpoint to get posts
+  const res = await fetch(
+    `https://asia-northeast1-til-ojisan-io-dev-ac456.cloudfunctions.net/getAllPpostIds`
+  );
+  const ids = await res.json();
+
+  if (!isValidPostIdsResponse(ids)) {
+    throw new Error("invalid ids type");
+  }
+  // Get the paths we want to pre-render based on posts
+  const paths = ids.map((id) => ({
+    params: { id },
+  }));
+
+  return { paths, fallback: false };
+}
 
 export async function getStaticProps(
   context
 ): Promise<GetStaticPropsResult<{ data: PostResponse }>> {
-  const id = context.id;
+  const id = context.params.id;
   const response = await fetch(
     `https://asia-northeast1-til-ojisan-io-dev-ac456.cloudfunctions.net/getPostById?id=${id}`
   ); // change env
