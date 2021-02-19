@@ -1,5 +1,10 @@
 # シン・til.ojisa.io
 
+## URLS
+
+- DEV: https://til-ojisan-io-dev-ac456.web.app/
+- PRD: https://til-ojisan-io-a47a1.web.app/
+
 ## test
 
 ```
