@@ -5,6 +5,7 @@ import {
   isValidPostResponse,
   PostResponse,
 } from "../../../types/response";
+import { getHost } from "../../util/getHost";
 
 export default (postsResponse: { data: PostResponse }) => {
   const { data } = postsResponse;
@@ -29,9 +30,7 @@ export default (postsResponse: { data: PostResponse }) => {
 
 export async function getStaticPaths() {
   // Call an external API endpoint to get posts
-  const res = await fetch(
-    `https://asia-northeast1-til-ojisan-io-dev-ac456.cloudfunctions.net/getAllPpostIds`
-  );
+  const res = await fetch(`${getHost()}/getAllPpostIds`);
   const ids = await res.json();
 
   if (!isValidPostIdsResponse(ids)) {
@@ -49,14 +48,11 @@ export async function getStaticProps(
   context
 ): Promise<GetStaticPropsResult<{ data: PostResponse }>> {
   const id = context.params.id;
-  const response = await fetch(
-    `https://asia-northeast1-til-ojisan-io-dev-ac456.cloudfunctions.net/getPostById?id=${id}`
-  ); // change env
+  const response = await fetch(`${getHost()}/getPostById?id=${id}`);
   const data = await response.json();
   if (!isValidPostResponse(data)) {
     throw new Error("invalid data type");
   }
-
   return {
     props: { data },
   };

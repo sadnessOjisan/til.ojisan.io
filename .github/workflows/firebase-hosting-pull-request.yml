@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-      - run: npm run build:next
+      - run: npm run build:dev
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
