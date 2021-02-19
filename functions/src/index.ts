@@ -111,18 +111,17 @@ export const getAllPosts = functions
       "GET, HEAD, OPTIONS, POST, DELETE"
     );
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
-    let data: any = [];
     await db
       .collection(COLLECTION_KEY.POSTS)
       .get()
       .then((snapshot) => {
         const docs = snapshot.docs;
-        for (let doc of docs) {
+        const promises = docs.map((doc) => {
           const post = doc.data();
           if (!isValidPostFireStoreFiledType(post)) {
             console.error(`${JSON.stringify(post)} is invalid data.`);
             response.status(500).json({ error: "internal database error" });
-            return;
+            throw new Error("invalid data");
           }
           const tagRefs = post.tagRefs;
           const tagNames = tagRefs.map(async (ref) => {
@@ -135,23 +134,20 @@ export const getAllPosts = functions
             }
             return tagData.name;
           });
-          Promise.all(tagNames)
-            .then((tagNames) => {
-              const html = marked(post.content);
-              const cleanHtml = sanitizeHtml(html);
-              data.push({
-                id: doc.id,
-                title: post.title,
-                content: cleanHtml,
-                timeStamp: post.timeStamp.toDate().toISOString(),
-                tags: tagNames,
-              });
-            })
-            .then(() => {});
-        }
-      })
-      .then(() => {
-        response.status(200).json(data);
+          const innerPromises = Promise.all(tagNames).then((tagNames) => {
+            const html = marked(post.content);
+            const cleanHtml = sanitizeHtml(html);
+            return {
+              id: doc.id,
+              title: post.title,
+              content: cleanHtml,
+              timeStamp: post.timeStamp.toDate().toISOString(),
+              tags: tagNames,
+            };
+          });
+          return innerPromises;
+        });
+        Promise.all(promises).then((data) => response.status(200).json(data));
       });
   });
 
