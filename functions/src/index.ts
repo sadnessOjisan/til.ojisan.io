@@ -22,11 +22,6 @@ const db = admin.firestore();
 export const saveTil = functions
   .region("asia-northeast1")
   .https.onRequest((request, response) => {
-    const host = request.headers.host;
-    if (host === undefined) {
-      response.status(400).json({ error: "host is undefined" });
-      throw new Error("invalid tagData");
-    }
     response.set("Access-Control-Allow-Origin", "*");
     response.set(
       "Access-Control-Allow-Methods",
@@ -110,12 +105,6 @@ export const saveTil = functions
 export const getAllPosts = functions
   .region("asia-northeast1")
   .https.onRequest(async (request, response) => {
-    console.log(JSON.stringify(request.headers));
-    const host = request.headers.from;
-    if (host === undefined) {
-      response.status(400).json({ error: "host is undefined" });
-      throw new Error("invalid tagData");
-    }
     response.set("Access-Control-Allow-Origin", "*");
     response.set(
       "Access-Control-Allow-Methods",
