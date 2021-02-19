@@ -111,12 +111,12 @@ export const getAllPosts = functions
       "GET, HEAD, OPTIONS, POST, DELETE"
     );
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    let data: any = [];
     await db
       .collection(COLLECTION_KEY.POSTS)
       .get()
       .then((snapshot) => {
         const docs = snapshot.docs;
-        let data: any = [];
         for (let doc of docs) {
           const post = doc.data();
           if (!isValidPostFireStoreFiledType(post)) {
@@ -147,10 +147,11 @@ export const getAllPosts = functions
                 tags: tagNames,
               });
             })
-            .then(() => {
-              response.status(200).json(data);
-            });
+            .then(() => {});
         }
+      })
+      .then(() => {
+        response.status(200).json(data);
       });
   });
 
