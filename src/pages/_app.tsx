@@ -1,4 +1,5 @@
 import "tailwindcss/tailwind.css";
+import "../style/markdown-body.scss";
 
 function MyApp({ Component, pageProps }) {
   return (
