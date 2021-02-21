@@ -7,7 +7,7 @@ import { getHost } from "../util/getHost";
 export default (postsResponse: { data: PostsResponse }) => {
   const posts = postsResponse.data.map((res) => toPostFromResponse(res));
   return posts.map((post) => (
-    <Link href={`posts/${post.id}`}>
+    <a href={`posts/${post.id}`}>
       <a>
         <div>
           <h2>{post.title}</h2>
@@ -18,7 +18,7 @@ export default (postsResponse: { data: PostsResponse }) => {
           </div>
         </div>
       </a>
-    </Link>
+    </a>
   ));
 };
 export async function getStaticProps(): Promise<
