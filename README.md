@@ -5,11 +5,10 @@
 - DEV: https://til-ojisan-io-dev-ac456.web.app/
 - PRD: https://til-ojisan-io-a47a1.web.app/
 
-## test
+## notes
 
-```
-curl -X post -H "Content-Type: application/json" -d '{"content":"222", "tags": ["2"], "title":"aaaa"}' https://asia-northeast1-til-ojisan-io-dev-ac456.cloudfunctions.net/saveTil
-```
+- admin repository
+  - https://github.com/sadnessOjisan/til.ojisan.io-admin
 
 ## TODO
 
