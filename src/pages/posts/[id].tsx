@@ -5,25 +5,27 @@ import {
   isValidPostResponse,
   PostResponse,
 } from "../../../types/response";
+import { format } from "../../util/date";
 import { getHost } from "../../util/getHost";
 
 export default (postsResponse: { data: PostResponse }) => {
   const { data } = postsResponse;
   const post = toPostFromResponse(data);
   const { title, tags, content, timeStamp } = post;
-  const YYYYMMDD = `${timeStamp.getFullYear()}/${
-    timeStamp.getMonth() + 1
-  }/${timeStamp.getDate()}`;
   return (
     <div>
-      <h1>{title}</h1>
-      <div>{YYYYMMDD}</div>
+      <h1 className="text-3xl mb-2">{title}</h1>
+      <div className="w-28 mb-2">{format(post.timeStamp)}</div>
       <div>
         {tags.map((tag) => (
           <span>{tag}</span>
         ))}
       </div>
-      <div dangerouslySetInnerHTML={{ __html: content }}></div>
+      <div
+        dangerouslySetInnerHTML={{ __html: content }}
+        className="mt-4"
+        id="post-body"
+      ></div>
     </div>
   );
 };

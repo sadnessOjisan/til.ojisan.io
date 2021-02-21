@@ -1,0 +1,39 @@
+#post-body {
+  h1 {
+    font-size: 32px;
+    margin: 20px 0px;
+  }
+  h2 {
+    font-size: 28px;
+    margin: 18px 0px;
+  }
+  h3 {
+    font-size: 20px;
+    margin: 16px 0px;
+  }
+  h4,
+  h5,
+  h6 {
+    font-size: 18px;
+    margin: 12px 0px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 12px 0px;
+  }
+
+  pre {
+    border: solid white 1px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  a {
+    color: #1d4ed8;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
