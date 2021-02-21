@@ -7,20 +7,25 @@ import { getHost } from "../../util/getHost";
 
 export default (postsResponse: { data: PostsResponse }) => {
   const posts = postsResponse.data.map((res) => toPostFromResponse(res));
-  return posts.map((post) => (
-    <Link href={`posts/${post.id}`}>
-      <a>
-        <div>
-          <h2>{post.title}</h2>
-          <div>
-            {post.tags.map((tag) => (
-              <span>{tag}</span>
-            ))}
-          </div>
-        </div>
-      </a>
-    </Link>
-  ));
+  return (
+    <div>
+      <h1 className="text-center">Today ojIsan Learned</h1>
+      {posts.map((post) => (
+        <Link href={`posts/${post.id}`}>
+          <a>
+            <div>
+              <h2>{post.title}</h2>
+              <div>
+                {post.tags.map((tag) => (
+                  <span>{tag}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        </Link>
+      ))}
+    </div>
+  );
 };
 
 export async function getStaticProps(): Promise<

@@ -17,8 +17,8 @@ curl -X post -H "Content-Type: application/json" -d '{"content":"222", "tags": [
 - [ ] swagger 的なの作る
 - [x] markdown で保存
 - [x] サニタイズ
-- [ ] 個別記事
-- [ ] 記事一覧
+- [x] 個別記事
+- [x] 記事一覧
 - [ ] カテゴリ一覧
 - [ ] 日付一覧
 - [ ] ページネーション
