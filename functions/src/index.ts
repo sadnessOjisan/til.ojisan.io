@@ -469,7 +469,7 @@ export const deletePostById = functions
       "GET, HEAD, OPTIONS, POST, DELETE"
     );
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
-    if (request.method !== "POST") {
+    if (request.method !== "DELETE") {
       response
         .status(400)
         .json({ error: `${request.method} is invalid method` });
