@@ -1,6 +1,6 @@
 import { ENV_TYPE } from "../const/env";
 import { CLOUDFUNCTIONS_ENDPOINT } from "../const/endpoint";
-import { getNodeEnv } from "./getEnv";
+import { getBuildNodeEnv } from "./getEnv";
 
 export const getHostFromEnv = (env: ENV_TYPE) => {
   if (env === "development") {
@@ -11,5 +11,5 @@ export const getHostFromEnv = (env: ENV_TYPE) => {
 };
 
 export const getHost = () => {
-  return getHostFromEnv(getNodeEnv());
+  return getHostFromEnv(getBuildNodeEnv());
 };

@@ -5,7 +5,7 @@ import Document, {
   NextScript,
   DocumentContext,
 } from "next/document";
-import { getNodeEnv } from "../util/getEnv";
+import { getBuildNodeEnv } from "../util/getEnv";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -14,7 +14,7 @@ class MyDocument extends Document {
   }
 
   render() {
-    const env = getNodeEnv();
+    const env = getBuildNodeEnv();
     return (
       <Html>
         <Head>
