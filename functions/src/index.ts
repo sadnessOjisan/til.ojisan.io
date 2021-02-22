@@ -464,11 +464,14 @@ export const deletePostById = functions
   .region("asia-northeast1") // TODO: 関数の先頭は共通化できそう
   .https.onRequest((request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
-    response.set(
-      "Access-Control-Allow-Methods",
-      "GET, HEAD, OPTIONS, POST, DELETE"
-    );
-    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    if (request.method === "OPTIONS") {
+      // Send response to OPTIONS requests
+      response.set("Access-Control-Allow-Methods", "DELETE");
+      response.set("Access-Control-Allow-Headers", "Content-Type");
+      response.set("Access-Control-Max-Age", "3600");
+      response.status(204).send("");
+      return;
+    }
     if (request.method !== "DELETE") {
       response
         .status(400)
