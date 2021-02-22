@@ -1,6 +1,5 @@
 import { GetStaticPropsResult } from "next";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { toPostFromResponse } from "../../../types/model";
 import { isValidPostsResponse, PostsResponse } from "../../../types/response";
 import { format } from "../../util/date";
