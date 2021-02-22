@@ -203,6 +203,56 @@ export const getPostById = functions
       });
   });
 
+//   tilを一つedit用に取得(htmlに変換しない)
+export const getPostByIdForEdit = functions
+  .region("asia-northeast1")
+  .https.onRequest(async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
+    response.set(
+      "Access-Control-Allow-Methods",
+      "GET, HEAD, OPTIONS, POST, DELETE"
+    );
+    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    const id = request.query.id;
+    if (!isValidRequestId(id)) {
+      response.status(400).json({ error: "invalid requestrequest" });
+      throw new Error("invalid requestrequest");
+    }
+    await db
+      .collection(COLLECTION_KEY.POSTS)
+      .doc(id)
+      .get()
+      .then((doc) => {
+        const post = doc.data();
+        if (!isValidPostFireStoreFiledType(post)) {
+          console.error(`${JSON.stringify(post)} is invalid data.`);
+          response.status(500).json({ error: "internal database error" });
+          throw new Error("invalid data");
+        }
+        const tagRefs = post.tagRefs;
+        const tagNames = tagRefs.map(async (ref) => {
+          const tagDoc = await ref.get();
+          const tagData = tagDoc.data();
+          if (!isValidTagFireStoreFieldType(tagData)) {
+            console.error(`${JSON.stringify(tagData)} is invalid data.`);
+            response.status(500).json({ error: "internal database error" });
+            throw new Error("invalid tagData");
+          }
+          return tagData.name;
+        });
+        Promise.all(tagNames).then((names) => {
+          const data = {
+            id: doc.id,
+            title: post.title,
+            content: post.content,
+            timeStamp: post.timeStamp.toDate().toISOString(),
+            tags: names,
+          };
+          response.status(200).json(data);
+        });
+      });
+  });
+
 export const isValidRequestId = (data: any): data is string => {
   if (data === undefined || data === null) {
     console.error("data should be there");
@@ -326,27 +376,50 @@ export const editPost = functions
         response.status(500).json({ error: "fail to save tags" });
         return;
       }
-    }
-    Promise.all(promises).then(async () => {
+      Promise.all(promises).then(async () => {
+        const postBody: Partial<PostFireStoreFieldType> = {
+          title: parsedBody.title,
+          content: parsedBody.content,
+          timeStamp: admin.firestore.FieldValue.serverTimestamp(),
+          tagRefs: createdTagRefs,
+        };
+
+        // post の保存
+        try {
+          await db
+            .collection(COLLECTION_KEY.POSTS)
+            .doc(parsedBody.id)
+            .update(postBody);
+          response.status(200).json("success");
+        } catch (e) {
+          console.error(e);
+          response.status(500).json({ error: "fail to save post" });
+        }
+      });
+    } else {
+      // tag の保存は不要
       const postBody: Partial<PostFireStoreFieldType> = {
         title: parsedBody.title,
         content: parsedBody.content,
         timeStamp: admin.firestore.FieldValue.serverTimestamp(),
-        tagRefs: createdTagRefs,
       };
 
       // post の保存
       try {
-        await db
-          .collection(COLLECTION_KEY.POSTS)
+        db.collection(COLLECTION_KEY.POSTS)
           .doc(parsedBody.id)
-          .update(postBody);
-        response.status(200).json("success");
+          .update(postBody)
+          .then(() => {
+            response.status(200).json("success");
+          })
+          .catch(() => {
+            console.error("fail to save edit data");
+          });
       } catch (e) {
         console.error(e);
         response.status(500).json({ error: "fail to save post" });
       }
-    });
+    }
   });
 
 const _isValidEditRequestBody = (body: any): body is EditRequest => {
