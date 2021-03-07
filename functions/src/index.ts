@@ -113,6 +113,7 @@ export const getAllPosts = functions
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
     await db
       .collection(COLLECTION_KEY.POSTS)
+      .orderBy("timeStamp", "desc")
       .get()
       .then((snapshot) => {
         const docs = snapshot.docs;
