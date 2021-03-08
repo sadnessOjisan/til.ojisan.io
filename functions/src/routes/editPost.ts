@@ -1,11 +1,9 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
-import {
-  PostFireStoreFieldType,
-  TagFireStoreFieldType,
-} from "../types/firestore";
 import { EditRequest } from "../types/request";
+import { TagFireStoreFieldType } from "../types/firestore/tag";
+import { PostFireStoreFieldType } from "../types/firestore/post";
 
 // データベースの参照を作成
 const db = admin.firestore();

@@ -2,10 +2,8 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { isValidRequestId } from "..";
 import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
-import {
-  isValidPostFireStoreFiledType,
-  isValidTagFireStoreFieldType,
-} from "../types/firestore";
+import { isValidPostFireStoreFiledType } from "../types/firestore/post";
+import { isValidTagFireStoreFieldType } from "../types/firestore/tag";
 
 // データベースの参照を作成
 const db = admin.firestore();
