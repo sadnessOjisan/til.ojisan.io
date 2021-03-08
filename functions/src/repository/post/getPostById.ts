@@ -27,7 +27,7 @@ export const getPostById = async (pid: string) => {
       id: doc.id,
       title: postField.title,
       content: postField.content,
-      timeStamp: postField.timeStamp.toDate().toISOString(),
+      timeStamp: postField.timeStamp,
       tags: names,
     };
     return data;
