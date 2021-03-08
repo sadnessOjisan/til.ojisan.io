@@ -1,6 +1,4 @@
 import * as admin from "firebase-admin";
-import * as sanitizeHtml from "sanitize-html";
-import * as marked from "marked";
 import { COLLECTION_KEY } from "../../const/FirestoreCollectionKey";
 import { isValidPostFireStoreFiledType } from "../../types/firestore/post";
 import { isValidTagFireStoreFieldType } from "../../types/firestore/tag";
@@ -25,12 +23,10 @@ export const getPostById = async (pid: string) => {
   });
 
   const post = Promise.all(tagNamePromise).then((names) => {
-    const html = marked(postField.content);
-    const cleanHtml = sanitizeHtml(html);
     const data = {
       id: doc.id,
       title: postField.title,
-      content: cleanHtml,
+      content: postField.content,
       timeStamp: postField.timeStamp.toDate().toISOString(),
       tags: names,
     };
