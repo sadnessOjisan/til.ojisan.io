@@ -5,6 +5,7 @@ import * as sanitizeHtml from "sanitize-html";
 import * as marked from "marked";
 import { isValidPostFireStoreFiledType } from "../types/firestore/post";
 import { isValidTagFireStoreFieldType } from "../types/firestore/tag";
+import { GetAllPostResponseType } from "../types/response/GetAllPostsResponseType";
 
 // データベースの参照を作成
 const db = admin.firestore();
@@ -56,6 +57,9 @@ export const getAllPosts = functions
           });
           return innerPromises;
         });
-        Promise.all(promises).then((data) => response.status(200).json(data));
+        Promise.all(promises).then((data) => {
+          const responseContent: GetAllPostResponseType = data;
+          response.status(200).json(responseContent);
+        });
       });
   });

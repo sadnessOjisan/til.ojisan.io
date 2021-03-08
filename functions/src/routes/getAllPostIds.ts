@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
+import { GetAllPostIdsResponseType } from "../types/response/GetAllPostIdsResponse";
 
 // データベースの参照を作成
 const db = admin.firestore();
@@ -22,6 +23,7 @@ export const getAllPpostIds = functions
         const ids = docs.map((doc) => {
           return doc.id;
         });
-        response.status(200).json(ids);
+        const resContent: GetAllPostIdsResponseType = ids;
+        response.status(200).json(resContent);
       });
   });

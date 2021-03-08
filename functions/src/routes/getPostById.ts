@@ -6,6 +6,7 @@ import * as sanitizeHtml from "sanitize-html";
 import * as marked from "marked";
 import { isValidPostFireStoreFiledType } from "../types/firestore/post";
 import { isValidTagFireStoreFieldType } from "../types/firestore/tag";
+import { GetPostByIdResponse } from "../types/response/GetPostByIdResponse";
 
 // データベースの参照を作成
 const db = admin.firestore();
@@ -57,7 +58,8 @@ export const getPostById = functions
             timeStamp: post.timeStamp.toDate().toISOString(),
             tags: names,
           };
-          response.status(200).json(data);
+          const responseContent: GetPostByIdResponse = data;
+          response.status(200).json(responseContent);
         });
       });
   });
