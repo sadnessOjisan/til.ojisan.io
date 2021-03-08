@@ -2,10 +2,9 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { isValidRequestId } from "..";
 import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
-import {
-  isValidPostFireStoreFiledType,
-  isValidTagFireStoreFieldType,
-} from "../types/firestore";
+import { isValidPostFireStoreFiledType } from "../types/firestore/post";
+import { isValidTagFireStoreFieldType } from "../types/firestore/tag";
+import { GetPostByIdForEditResponseType } from "../types/response/GetPostByIdForEditResponse";
 
 // データベースの参照を作成
 const db = admin.firestore();
@@ -55,7 +54,8 @@ export const getPostByIdForEdit = functions
             timeStamp: post.timeStamp.toDate().toISOString(),
             tags: names,
           };
-          response.status(200).json(data);
+          const responseContent: GetPostByIdForEditResponseType = data;
+          response.status(200).json(responseContent);
         });
       });
   });

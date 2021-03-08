@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { SaveRequest } from "./types/request";
+import { SaveRequestType } from "./types/request/SaveRequest";
 
 admin.initializeApp(functions.config().firebase);
 
@@ -24,7 +24,7 @@ export const isValidRequestId = (data: any): data is string => {
   return true;
 };
 
-export const _isValidSaveRequestBody = (body: any): body is SaveRequest => {
+export const _isValidSaveRequestBody = (body: any): body is SaveRequestType => {
   if (!body) {
     console.error("should not empty");
     return false;
