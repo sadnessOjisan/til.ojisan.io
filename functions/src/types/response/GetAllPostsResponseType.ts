@@ -4,4 +4,5 @@ export type GetAllPostResponseType = {
   content: string;
   timeStamp: string;
   tags: string[];
+  show: boolean;
 }[];

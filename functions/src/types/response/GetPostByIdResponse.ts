@@ -4,4 +4,5 @@ export type GetPostByIdResponse = {
   content: string;
   timeStamp: string;
   tags: string[];
+  show: boolean;
 };
