@@ -4,6 +4,7 @@ export type PostResponse = {
   content: string;
   timeStamp: string;
   tags: string[];
+  show: true;
 };
 
 export const isValidPostResponse = (data: any): data is PostResponse => {
@@ -25,6 +26,10 @@ export const isValidPostResponse = (data: any): data is PostResponse => {
   }
   if (typeof data.timeStamp !== "string") {
     console.error("data.timeStamp should be string");
+    return false;
+  }
+  if (typeof data.show !== "boolean") {
+    console.error("data.show should be boolean");
     return false;
   }
   if (!Array.isArray(data.tags)) {
