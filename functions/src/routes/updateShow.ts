@@ -7,8 +7,6 @@ export const updateShowFlg = functions
   .region("asia-northeast1")
   .https.onRequest(async (request, response) => {
     if (request.method === "OPTIONS") {
-      response.status(204).send("");
-    } else if (request.method === "POST") {
       response.set("Access-Control-Allow-Origin", "*");
       response.set(
         "Access-Control-Allow-Methods",
@@ -18,6 +16,8 @@ export const updateShowFlg = functions
         "Access-Control-Allow-Headers",
         "Content-Type, authorization"
       );
+      response.status(204).send("");
+    } else if (request.method === "POST") {
       const body = request.body;
       if (!isValidUpdateShowRequest(body)) {
         response.status(400).json({ error: "invalid requestrequest" });
