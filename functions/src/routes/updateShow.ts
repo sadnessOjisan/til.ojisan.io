@@ -6,16 +6,13 @@ import { isValidUpdateShowRequest } from "../types/request/update-show-request";
 export const updateShowFlg = functions
   .region("asia-northeast1")
   .https.onRequest(async (request, response) => {
+    response.set("Access-Control-Allow-Origin", "*");
+    response.set(
+      "Access-Control-Allow-Methods",
+      "GET, HEAD, OPTIONS, POST, DELETE"
+    );
+    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
     if (request.method === "OPTIONS") {
-      response.set("Access-Control-Allow-Origin", "*");
-      response.set(
-        "Access-Control-Allow-Methods",
-        "GET, HEAD, OPTIONS, POST, DELETE"
-      );
-      response.set(
-        "Access-Control-Allow-Headers",
-        "Content-Type, authorization"
-      );
       response.status(204).send("");
     } else if (request.method === "POST") {
       const body = request.body;
