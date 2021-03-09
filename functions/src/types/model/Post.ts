@@ -4,4 +4,5 @@ export type Post = {
   id: string;
   title: string;
   tags: string[];
+  show: boolean;
 };

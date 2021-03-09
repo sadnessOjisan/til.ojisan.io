@@ -11,6 +11,7 @@ export const getPostByPid = async (pid: string) => {
     ...post,
     content: cleanHtml,
     timeStamp: post.timeStamp.toDate().toISOString(),
+    show: post.show || false,
   };
   return sanitizedPost;
 };

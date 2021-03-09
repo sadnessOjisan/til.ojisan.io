@@ -53,6 +53,7 @@ export const getAllPosts = functions
               content: cleanHtml,
               timeStamp: post.timeStamp.toDate().toISOString(),
               tags: tagNames,
+              show: post.show || false,
             };
           });
           return innerPromises;

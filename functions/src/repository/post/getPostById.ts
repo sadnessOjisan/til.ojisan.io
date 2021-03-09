@@ -29,6 +29,7 @@ export const getPostById = async (pid: string) => {
       content: postField.content,
       timeStamp: postField.timeStamp,
       tags: names,
+      show: postField.show,
     };
     return data;
   });
