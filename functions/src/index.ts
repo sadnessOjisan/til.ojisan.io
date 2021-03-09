@@ -11,6 +11,7 @@ export { getPostByIdForEdit } from "./routes/getPostByIdForEdit";
 export { getAllPpostIds } from "./routes/getAllPostIds";
 export { editPost } from "./routes/editPost";
 export { deletePostById } from "./routes/deletePostById";
+export { updateShowFlg } from "./routes/updateShow";
 
 export const isValidRequestId = (data: any): data is string => {
   if (data === undefined || data === null) {

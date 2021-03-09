@@ -3,6 +3,7 @@ export type PostFireStoreFieldType = {
   content: string; // markdown
   timeStamp: FirebaseFirestore.FieldValue;
   tagRefs: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>[];
+  show?: boolean;
 };
 
 export type PostFireStoreFieldResponseType = {
@@ -10,7 +11,10 @@ export type PostFireStoreFieldResponseType = {
   content: string; // markdown
   timeStamp: FirebaseFirestore.Timestamp;
   tagRefs: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>[];
+  show?: boolean;
 };
+
+export type UpdatePostFireStoreFieldType = Partial<PostFireStoreFieldType>;
 
 export const isValidPostFireStoreFiledType = (
   data: any
