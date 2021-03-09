@@ -18,7 +18,7 @@ export const isValidUpdateShowRequest = (
     );
     return false;
   }
-  if (typeof data.post_id === "string") {
+  if (typeof data.post_id !== "string") {
     functions.logger.error(
       "<isValidUpdateShowRequest> post_id は文字列であるべき | data",
       data,
@@ -28,7 +28,7 @@ export const isValidUpdateShowRequest = (
     );
     return false;
   }
-  if (typeof data.show === "boolean") {
+  if (typeof data.show !== "boolean") {
     functions.logger.error(
       "<isValidUpdateShowRequest> show はbooleanであるべき | data",
       data,

@@ -17,7 +17,7 @@ export const updateShowFlg = functions
     } else if (request.method === "POST") {
       const body = request.body;
       if (!isValidUpdateShowRequest(body)) {
-        response.status(400).json({ error: "invalid requestrequest" });
+        response.status(400).json({ error: "invalid request" });
         throw new Error("invalid requestrequest");
       }
       await updateShow(body.post_id, body.show);
