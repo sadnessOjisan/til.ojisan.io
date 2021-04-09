@@ -20,8 +20,8 @@ export const isValidUpdateShowRequest = (
   }
   if (typeof data.post_id !== "string") {
     functions.logger.error(
-      "<isValidUpdateShowRequest> post_id は文字列であるべき | data",
-      data,
+      "<isValidUpdateShowRequest> post_id は文字列であるべき | data.post_id",
+      data.post_id,
       {
         structuredData: true,
       }
