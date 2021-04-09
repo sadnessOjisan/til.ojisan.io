@@ -1,5 +1,4 @@
 import * as functions from "firebase-functions";
-import { updateShow } from "../service/post/updateShowFlg";
 import { checkAdmin } from "../service/session/checkAdmin";
 import { isValidUpdateShowRequest } from "../types/request/update-show-request";
 
