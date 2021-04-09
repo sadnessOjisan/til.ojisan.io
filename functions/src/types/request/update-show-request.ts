@@ -27,8 +27,6 @@ export const isValidUpdateShowRequest = (
       }
     );
 
-    console.error(data);
-    console.error(data.post_id);
     return false;
   }
   if (typeof data.show !== "boolean") {

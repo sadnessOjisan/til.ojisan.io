@@ -3,6 +3,7 @@ import * as admin from "firebase-admin";
 import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
 import { checkAdmin } from "../service/session/checkAdmin";
 import { allowCors } from "../util/cors";
+import { deletePost } from "../service/post/delete-post";
 
 // データベースの参照を作成
 const db = admin.firestore();
@@ -39,19 +40,11 @@ export const deletePostById = functions
       return;
     }
 
-    // post の保存
+    // post の削除
     try {
-      db.collection(COLLECTION_KEY.POSTS)
-        .doc(parsedBody.id)
-        .delete()
-        .then(() => {
-          response.status(200).json("success");
-        })
-        .catch(() => {
-          console.error("fail to save edit data");
-        });
+      await deletePost(parsedBody.id);
+      response.status(200).json("success"); // TODO: should return 204
     } catch (e) {
-      console.error(e);
       response.status(500).json({ error: "fail to save post" });
     }
   });
