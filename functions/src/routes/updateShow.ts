@@ -2,17 +2,13 @@ import * as functions from "firebase-functions";
 import { updateShow } from "../service/post/updateShowFlg";
 import { checkAdmin } from "../service/session/checkAdmin";
 import { isValidUpdateShowRequest } from "../types/request/update-show-request";
+import { allowCors } from "../util/cors";
 
 // update
 export const updateShowFlg = functions
   .region("asia-northeast1")
   .https.onRequest(async (request, response) => {
-    response.set("Access-Control-Allow-Origin", "*");
-    response.set(
-      "Access-Control-Allow-Methods",
-      "GET, HEAD, OPTIONS, POST, DELETE"
-    );
-    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    allowCors(response);
     if (request.method === "OPTIONS") {
       response.status(204).send("");
     } else if (request.method === "POST") {

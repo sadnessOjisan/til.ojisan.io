@@ -5,6 +5,7 @@ import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
 import { isValidPostFireStoreFiledType } from "../types/firestore/post";
 import { isValidTagFireStoreFieldType } from "../types/firestore/tag";
 import { GetPostByIdForEditResponseType } from "../types/response/GetPostByIdForEditResponse";
+import { allowCors } from "../util/cors";
 
 // データベースの参照を作成
 const db = admin.firestore();
@@ -13,12 +14,7 @@ const db = admin.firestore();
 export const getPostByIdForEdit = functions
   .region("asia-northeast1")
   .https.onRequest(async (request, response) => {
-    response.set("Access-Control-Allow-Origin", "*");
-    response.set(
-      "Access-Control-Allow-Methods",
-      "GET, HEAD, OPTIONS, POST, DELETE"
-    );
-    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    allowCors(response); // 必要か調べる
     const id = request.query.id;
     if (!isValidRequestId(id)) {
       response.status(400).json({ error: "invalid requestrequest" });
