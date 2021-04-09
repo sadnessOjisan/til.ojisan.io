@@ -43,8 +43,8 @@ export async function getStaticProps(): Promise<
   if (!isValidPostsResponse(data)) {
     throw new Error("invalid data type");
   }
-
+  const filteredData = data.filter((d) => d.show === true);
   return {
-    props: { data },
+    props: { data: filteredData },
   };
 }
