@@ -18,6 +18,10 @@ export const editPost = functions
       "GET, HEAD, OPTIONS, POST, DELETE"
     );
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    if (request.method === "OPTIONS") {
+      response.status(204).send("");
+      return;
+    }
     if (request.method !== "POST") {
       response
         .status(400)
