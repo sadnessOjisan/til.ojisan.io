@@ -13,7 +13,10 @@ export const deletePostById = functions
     if (request.method === "OPTIONS") {
       // Send response to OPTIONS requests
       response.set("Access-Control-Allow-Methods", "DELETE");
-      response.set("Access-Control-Allow-Headers", "Content-Type");
+      response.set(
+        "Access-Control-Allow-Headers",
+        "Content-Type, authorization"
+      );
       response.set("Access-Control-Max-Age", "3600");
       response.status(204).send("");
       return;
