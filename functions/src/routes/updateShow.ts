@@ -21,7 +21,7 @@ export const updateShowFlg = functions
         response.status(401).json({ error: "please login" });
         return;
       }
-      const body = request.body;
+      const body = JSON.parse(request.body);
       if (!isValidUpdateShowRequest(body)) {
         response
           .status(400)
