@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import { updateShow } from "../service/post/updateShowFlg";
+import { checkAdmin } from "../service/session/checkAdmin";
 import { isValidUpdateShowRequest } from "../types/request/update-show-request";
 
 // update
@@ -15,6 +16,11 @@ export const updateShowFlg = functions
     if (request.method === "OPTIONS") {
       response.status(204).send("");
     } else if (request.method === "POST") {
+      const isAuthed = await checkAdmin(request);
+      if (!isAuthed) {
+        response.status(401).json({ error: "please login" });
+        return;
+      }
       const body = request.body;
       if (!isValidUpdateShowRequest(body)) {
         response.status(400).json({ error: "invalid request" });

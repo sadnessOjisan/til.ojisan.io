@@ -1,13 +1,14 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
+import { checkAdmin } from "../service/session/checkAdmin";
 
 // データベースの参照を作成
 const db = admin.firestore();
 
 export const deletePostById = functions
   .region("asia-northeast1") // TODO: 関数の先頭は共通化できそう
-  .https.onRequest((request, response) => {
+  .https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
     if (request.method === "OPTIONS") {
       // Send response to OPTIONS requests
@@ -21,6 +22,11 @@ export const deletePostById = functions
       response
         .status(400)
         .json({ error: `${request.method} is invalid method` });
+      return;
+    }
+    const isAuthed = await checkAdmin(request);
+    if (!isAuthed) {
+      response.status(401).json({ error: "please login" });
       return;
     }
     try {
