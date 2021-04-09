@@ -26,6 +26,9 @@ export const isValidUpdateShowRequest = (
         structuredData: true,
       }
     );
+
+    console.error(data);
+    console.error(data.post_id);
     return false;
   }
   if (typeof data.show !== "boolean") {
