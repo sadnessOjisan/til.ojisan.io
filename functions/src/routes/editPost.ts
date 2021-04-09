@@ -5,6 +5,7 @@ import { TagFireStoreFieldType } from "../types/firestore/tag";
 import { PostFireStoreFieldType } from "../types/firestore/post";
 import { EditRequest } from "../types/request/EditRequest";
 import { checkAdmin } from "../service/session/checkAdmin";
+import { allowCors } from "../util/cors";
 
 // データベースの参照を作成
 const db = admin.firestore();
@@ -12,12 +13,7 @@ const db = admin.firestore();
 export const editPost = functions
   .region("asia-northeast1") // TODO: 関数の先頭は共通化できそう
   .https.onRequest(async (request, response) => {
-    response.set("Access-Control-Allow-Origin", "*");
-    response.set(
-      "Access-Control-Allow-Methods",
-      "GET, HEAD, OPTIONS, POST, DELETE"
-    );
-    response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    allowCors(response);
     if (request.method === "OPTIONS") {
       response.status(204).send("");
       return;
