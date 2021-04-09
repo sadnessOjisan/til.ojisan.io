@@ -38,7 +38,5 @@ export const checkAdmin = async (
   if (!ADMIN_USER_ID) {
     throw new Error("please set ADMIN_USER_ID");
   }
-  console.log("uid", uid);
-  console.log("ADMIN_USER_ID", ADMIN_USER_ID);
   return uid === ADMIN_USER_ID;
 };

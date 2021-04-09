@@ -4,6 +4,7 @@ import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
 import { _isValidSaveRequestBody } from "..";
 import { TagFireStoreFieldType } from "../types/firestore/tag";
 import { PostFireStoreFieldType } from "../types/firestore/post";
+import { checkAdmin } from "../service/session/checkAdmin";
 
 // データベースの参照を作成
 const db = admin.firestore();
@@ -13,17 +14,26 @@ const db = admin.firestore();
  */
 export const saveTil = functions
   .region("asia-northeast1") // TODO: 関数の先頭は共通化できそう
-  .https.onRequest((request, response) => {
+  .https.onRequest(async (request, response) => {
     response.set("Access-Control-Allow-Origin", "*");
     response.set(
       "Access-Control-Allow-Methods",
       "GET, HEAD, OPTIONS, POST, DELETE"
     );
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+    if (request.method === "OPTIONS") {
+      response.status(204).send("");
+      return;
+    }
     if (request.method !== "POST") {
       response
         .status(400)
         .json({ error: `${request.method} is invalid method` });
+      return;
+    }
+    const isAuthed = await checkAdmin(request);
+    if (!isAuthed) {
+      response.status(401).json({ error: "please login" });
       return;
     }
     try {
