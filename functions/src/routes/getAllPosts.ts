@@ -6,7 +6,6 @@ import * as marked from "marked";
 import { isValidPostFireStoreFiledType } from "../types/firestore/post";
 import { isValidTagFireStoreFieldType } from "../types/firestore/tag";
 import { GetAllPostResponseType } from "../types/response/GetAllPostsResponseType";
-import { checkAdmin } from "../service/session/checkAdmin";
 
 // データベースの参照を作成
 const db = admin.firestore();
