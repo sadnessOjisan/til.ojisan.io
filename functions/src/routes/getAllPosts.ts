@@ -22,12 +22,6 @@ export const getAllPosts = functions
     );
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
 
-    const isAuthed = await checkAdmin(request);
-
-    if (!isAuthed) {
-      response.status(401).json({ error: "please login" });
-    }
-
     await db
       .collection(COLLECTION_KEY.POSTS)
       .orderBy("timeStamp", "desc")
