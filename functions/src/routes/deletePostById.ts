@@ -1,8 +1,9 @@
 import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
 import { checkAdmin } from "../service/session/checkAdmin";
 import { allowCors } from "../util/cors";
 import { deletePost } from "../service/post/delete-post";
+import { isValidDeleteRequestBody } from "../types/request/delete-request";
+import { parseBody } from "../util/parse-body";
 
 export const deletePostById = functions
   .region("asia-northeast1") // TODO: 関数の先頭は共通化できそう
@@ -23,15 +24,15 @@ export const deletePostById = functions
       response.status(401).json({ error: "please login" });
       return;
     }
+    let parsedBody;
     try {
-      JSON.parse(request.body);
+      parsedBody = parseBody(request.body);
     } catch (e) {
       response.status(400).json({ error: `${request.body} cannot parse` });
-      throw new Error("body parse error");
+      return;
     }
-    const parsedBody = JSON.parse(request.body);
-    if (!_isValidDeleteRequestBody(parsedBody)) {
-      console.error(`${JSON.stringify(request.body)} is invalid request`);
+
+    if (!isValidDeleteRequestBody(parsedBody)) {
       response.status(400).json({ error: "invalid request" });
       return;
     }
@@ -44,15 +45,3 @@ export const deletePostById = functions
       response.status(500).json({ error: "fail to save post" });
     }
   });
-
-const _isValidDeleteRequestBody = (body: any): body is { id: string } => {
-  if (body === undefined || body === null) {
-    console.error("body should be there");
-    return false;
-  }
-  if (typeof body.id !== "string") {
-    console.error("id should be there");
-    return false;
-  }
-  return true;
-};
