@@ -25,11 +25,18 @@ export const getAuthUserId = async (
   return decoded.uid;
 };
 
+/**
+ * 管理者からのアクセスかどうかチェックする
+ * @param req
+ * @returns 管理者かどうかの真偽値
+ */
 export const checkAdmin = async (
   req: functions.https.Request
 ): Promise<boolean> => {
   const uid = await getAuthUserId(req);
-  const ADMIN_USER_ID = process.env.ADMIN_USER_ID;
-  if (!ADMIN_USER_ID) return false;
+  const ADMIN_USER_ID = functions.config().admin.user_id;
+  if (!ADMIN_USER_ID) {
+    throw new Error("please set ADMIN_USER_ID");
+  }
   return uid === process.env.ADMIN_USER_ID;
 };

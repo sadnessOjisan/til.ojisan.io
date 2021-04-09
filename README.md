@@ -10,6 +10,22 @@
 - admin repository
   - https://github.com/sadnessOjisan/til.ojisan.io-admin
 
+## env
+
+- admin_user_id
+  - plese check your firebase auth users, if you forget
+
+```sh
+# check current env
+npx firebase use
+
+# set env
+npx firebase functions:config:set admin.user_id="HOGEHOGE"
+
+# get env
+npx firebase functions:config:get
+```
+
 ## TODO
 
 - [x] firestore と接続
