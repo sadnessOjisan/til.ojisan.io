@@ -12,6 +12,7 @@ export { getAllPpostIds } from "./routes/getAllPostIds";
 export { editPost } from "./routes/editPost";
 export { deletePostById } from "./routes/deletePostById";
 export { updateShowFlg } from "./routes/updateShow";
+export { checkAdminOrNot } from "./routes/check-admin";
 
 export const isValidRequestId = (data: any): data is string => {
   if (data === undefined || data === null) {
