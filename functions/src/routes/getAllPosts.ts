@@ -6,6 +6,7 @@ import * as marked from "marked";
 import { isValidPostFireStoreFiledType } from "../types/firestore/post";
 import { isValidTagFireStoreFieldType } from "../types/firestore/tag";
 import { GetAllPostResponseType } from "../types/response/GetAllPostsResponseType";
+import { checkAdmin } from "../service/session/checkAdmin";
 
 // データベースの参照を作成
 const db = admin.firestore();
@@ -20,6 +21,13 @@ export const getAllPosts = functions
       "GET, HEAD, OPTIONS, POST, DELETE"
     );
     response.set("Access-Control-Allow-Headers", "Content-Type, authorization");
+
+    const isAuthed = await checkAdmin(request);
+
+    if (!isAuthed) {
+      response.status(401).json({ error: "please login" });
+    }
+
     await db
       .collection(COLLECTION_KEY.POSTS)
       .orderBy("timeStamp", "desc")
