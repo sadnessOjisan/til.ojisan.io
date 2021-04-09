@@ -23,7 +23,7 @@ export const updateShowFlg = functions
       }
       const body = request.body;
       if (!isValidUpdateShowRequest(body)) {
-        response.status(400).json({ error: "invalid request" });
+        response.status(400).json({ error: `${JSON.stringify(body)} is invalid request" });
         throw new Error("invalid requestrequest");
       }
       await updateShow(body.post_id, body.show);
