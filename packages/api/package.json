@@ -1,5 +1,5 @@
 {
-  "name": "functions",
+  "name": "api",
   "scripts": {
     "build:function": "tsc",
     "serve": "npm run build && firebase emulators:start --only functions",
