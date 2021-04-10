@@ -7,6 +7,7 @@ admin.initializeApp(functions.config().firebase);
 
 export { saveTil } from "./routes/save-til";
 export { getAllPosts } from "./routes/get-all-posts";
+export { getAllShowablePosts } from "./routes/get-all-showable-posts";
 export { getPostById } from "./routes/get-post-by-id";
 export { getPostByIdForEdit } from "./routes/get-post-by-id-for-edit";
 export { getAllPpostIds } from "./routes/get-all-post-ids";
