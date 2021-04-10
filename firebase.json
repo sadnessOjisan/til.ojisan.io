@@ -4,7 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "functions": {
-    "predeploy": "yarn --prefix \"$RESOURCE_DIR\" build:function",
+    "predeploy": "yarn workspace api run build:function",
     "source": "packages/api"
   },
   "hosting": {
