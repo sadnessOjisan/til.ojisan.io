@@ -9,9 +9,9 @@ import {
   View,
 } from "@adobe/react-spectrum";
 import Send from "@spectrum-icons/workflow/Send";
+import { ENDPOINT } from "endpoint/src";
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import { API_PATHS } from "../const/endpoint";
 import { useAuthTokenContext } from "../context/auth";
 import { Post } from "../types/Post";
 import { getHost } from "../util/getHost";
@@ -60,7 +60,7 @@ export const Edit = (props: { id: string }) => {
 
   useEffect(() => {
     setData({ isLoading: true, data: undefined, error: undefined });
-    fetch(`${getHost()}/${API_PATHS.getPostByIdForEdit}?id=${props.id}`)
+    fetch(`${getHost()}/${ENDPOINT.getPostByIdForEdit}?id=${props.id}`)
       .then((res) => {
         res.json().then((data) => {
           // TODO: validation

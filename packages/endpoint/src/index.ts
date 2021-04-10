@@ -3,4 +3,9 @@ export const ENDPOINT = {
   getAllPpostIds: "getAllPpostIds",
   getPostById: "getPostById",
   getAllShowablePosts: "getAllShowablePosts",
+  checkAdminOrNot: "checkAdminOrNot",
+  setShowFlg: "updateShowFlg",
+  saveTil: "saveTil",
+  getPostByIdForEdit: "getPostByIdForEdit",
+  deletePostById: "deletePostById",
 };

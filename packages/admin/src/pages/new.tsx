@@ -7,9 +7,9 @@ import {
   View,
 } from "@adobe/react-spectrum";
 import Send from "@spectrum-icons/workflow/Send";
+import { ENDPOINT } from "endpoint/src";
 import { h } from "preact";
 import { useState } from "preact/hooks";
-import { API_PATHS } from "../const/endpoint";
 import { useAuthTokenContext } from "../context/auth";
 import { getHost } from "../util/getHost";
 
@@ -54,7 +54,7 @@ export const New = () => {
     setState({ isSending: true, error: undefined });
     if (session === undefined) throw new Error("should login");
     const token = await session.getIdToken();
-    fetch(`${getHost()}/${API_PATHS.saveTil}`, {
+    fetch(`${getHost()}/${ENDPOINT.saveTil}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

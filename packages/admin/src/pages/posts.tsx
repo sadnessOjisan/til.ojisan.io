@@ -13,7 +13,7 @@ import { useEffect, useState } from "preact/hooks";
 import { Post } from "../types/Post";
 import { getHost } from "../util/getHost";
 import type { SendingStateType } from "../types/util/sending-state";
-import { API_PATHS } from "../const/endpoint";
+import { ENDPOINT } from "endpoint/src";
 import { useAuthTokenContext } from "../context/auth";
 
 type PostState =
@@ -39,7 +39,7 @@ export const Posts = () => {
 
   useEffect(() => {
     setData({ isLoading: true, data: undefined, error: undefined });
-    fetch(`${getHost()}/${API_PATHS.getAllPosts}`)
+    fetch(`${getHost()}/${ENDPOINT.getAllPosts}`)
       .then((res) => {
         res.json().then((data) => {
           // TODO: validation
@@ -55,7 +55,7 @@ export const Posts = () => {
     setFlgSendintState({ isPosted: false, error: undefined });
     if (session === undefined) throw new Error("should login");
     session?.getIdToken().then((token) => {
-      fetch(`${getHost()}/${API_PATHS.setShowFlg}`, {
+      fetch(`${getHost()}/${ENDPOINT.setShowFlg}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -131,7 +131,7 @@ export const Posts = () => {
                           variant="cta"
                           onPress={async () => {
                             const token = await session?.getIdToken();
-                            fetch(`${getHost()}/deletePostById`, {
+                            fetch(`${getHost()}/${ENDPOINT.deletePostById}`, {
                               method: "DELETE",
                               headers: {
                                 Authorization: `Bearer ${token}`,
