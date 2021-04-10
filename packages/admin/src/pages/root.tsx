@@ -10,8 +10,8 @@ import "../infra/firebase";
 import { useEffect, useState } from "preact/hooks";
 import { auth, GhProvider } from "../infra/firebase";
 import { getHost } from "../util/getHost";
-import { API_PATHS } from "../const/endpoint";
 import { AuthTokenContext } from "../context/auth";
+import { ENDPOINT } from "endpoint/src";
 
 export const Root = () => {
   const [session, setSession] = useState<firebase.default.User | undefined>(
@@ -31,7 +31,7 @@ export const Root = () => {
   useEffect(() => {
     if (session === undefined) return;
     session.getIdToken().then((token) => {
-      fetch(`${getHost()}/${API_PATHS.checkAdminOrNot}`, {
+      fetch(`${getHost()}/${ENDPOINT.checkAdminOrNot}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
