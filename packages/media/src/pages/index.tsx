@@ -1,6 +1,7 @@
 import { GetStaticPropsResult } from "next";
 import Link from "next/link";
 import { PostsResponse } from "type/src/api/response/post-response";
+import { ENDPOINT } from "endpoint/src";
 import { toPostFromResponse } from "../../types/model";
 import { isValidPostsResponse } from "../../types/response";
 import { format } from "../util/date";
@@ -39,7 +40,7 @@ export default (postsResponse: { data: PostsResponse }) => {
 export async function getStaticProps(): Promise<
   GetStaticPropsResult<{ data: PostsResponse }>
 > {
-  const response = await fetch(`${getHost()}/getAllPosts`);
+  const response = await fetch(`${getHost()}/${ENDPOINT.getAllPosts}`);
   const data = await response.json();
   if (!isValidPostsResponse(data)) {
     throw new Error("invalid data type");

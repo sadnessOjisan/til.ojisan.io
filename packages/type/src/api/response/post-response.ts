@@ -4,8 +4,21 @@ export type PostResponse = {
   content: string;
   timeStamp: string;
   tags: string[];
+  show: boolean;
+};
+
+export type PostsResponse = PostResponse[];
+
+export type ShowablePostResponse = {
+  id: string;
+  title: string;
+  content: string;
+  timeStamp: string;
+  tags: string[];
   show: true;
 };
+
+export type ShowablePostsResponse = ShowablePostResponse[];
 
 export type GetPostByIdResponse = {
   id: string;
@@ -17,8 +30,6 @@ export type GetPostByIdResponse = {
 };
 
 export type GetPostsByIdResponse = GetPostByIdResponse[];
-
-export type PostsResponse = PostResponse[];
 
 export type PostIdsResponse = string[];
 

@@ -1,10 +1,12 @@
 import {
+  ShowablePostResponse,
+  ShowablePostsResponse,
   PostIdsResponse,
-  PostResponse,
-  PostsResponse,
 } from "type/src/api/response/post-response";
 
-export const isValidPostResponse = (data: any): data is PostResponse => {
+export const isValidPostResponse = (
+  data: any
+): data is ShowablePostResponse => {
   if (data === undefined || data === null) {
     console.error("data should be there");
     return false;
@@ -25,8 +27,8 @@ export const isValidPostResponse = (data: any): data is PostResponse => {
     console.error("data.timeStamp should be string");
     return false;
   }
-  if (typeof data.show !== "boolean") {
-    console.error("data.show should be boolean");
+  if (data.show !== true) {
+    console.error("data.show should be true");
     return false;
   }
   if (!Array.isArray(data.tags)) {
@@ -42,7 +44,9 @@ export const isValidPostResponse = (data: any): data is PostResponse => {
   return true;
 };
 
-export const isValidPostsResponse = (posts: any): posts is PostsResponse => {
+export const isValidPostsResponse = (
+  posts: any
+): posts is ShowablePostsResponse => {
   if (!Array.isArray(posts)) {
     console.error("posts should be array");
     return false;
