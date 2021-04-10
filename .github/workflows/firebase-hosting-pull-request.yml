@@ -8,8 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn install
-      - run: yarn workspace media run build:dev
+      - name: yarn install
+        working-directory: ./packages/media
+        run: |
+          yarn install
+      - name: yarn build
+        working-directory: ./packages/media
+        run: |
+          yarn run build:dev
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
