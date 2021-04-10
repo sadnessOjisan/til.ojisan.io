@@ -131,7 +131,7 @@ export const Posts = () => {
                           variant="cta"
                           onPress={async () => {
                             const token = await session?.getIdToken();
-                            fetch(`${getHost()}/deletePostById`, {
+                            fetch(`${getHost()}/${ENDPOINT.deletePostById}`, {
                               method: "DELETE",
                               headers: {
                                 Authorization: `Bearer ${token}`,

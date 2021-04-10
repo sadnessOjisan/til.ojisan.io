@@ -7,4 +7,5 @@ export const ENDPOINT = {
   setShowFlg: "updateShowFlg",
   saveTil: "saveTil",
   getPostByIdForEdit: "getPostByIdForEdit",
+  deletePostById: "deletePostById",
 };
