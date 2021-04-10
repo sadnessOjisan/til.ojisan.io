@@ -1,0 +1,37 @@
+{
+  "name": "til.ojisan.io-admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:dev": "BUILD_ENV=development webpack && touch dist/sw.js && cp manifest.json icon-192x192.png icon-256x256.png icon-384x384.png icon-512x512.png src/sw.js dist",
+    "build:prd": "BUILD_ENV=production webpack && touch dist/sw.js && cp manifest.json icon-192x192.png icon-256x256.png icon-384x384.png icon-512x512.png src/sw.js dist",
+    "dev": "BUILD_ENV=development webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sadnessOjisan/til.ojisan.io-admin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sadnessOjisan/til.ojisan.io-admin/issues"
+  },
+  "homepage": "https://github.com/sadnessOjisan/til.ojisan.io-admin#readme",
+  "devDependencies": {
+    "css-loader": "^5.0.2",
+    "html-webpack-plugin": "^5.1.0",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.17",
+    "webpack": "^5.23.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "@adobe/react-spectrum": "^3.8.0",
+    "@spectrum-icons/workflow": "^3.2.0",
+    "firebase": "^8.3.3",
+    "preact": "^10.5.12",
+    "preact-router": "^3.2.1"
+  }
+}

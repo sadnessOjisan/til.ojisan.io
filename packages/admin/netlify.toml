@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# https://docs.netlify.com/site-deploys/overview/
+[context.production]
+  command = "npm run build:prd"
+[context.deploy-preview]
+  command = "npm run build:dev"
