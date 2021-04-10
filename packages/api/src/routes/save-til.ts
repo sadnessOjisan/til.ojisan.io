@@ -49,7 +49,7 @@ export const saveTil = functions
         parsedBody.tags
       );
     } catch (e) {
-      response.status(200).json("fail save");
+      response.status(500).json("fail save");
       return;
     }
 
