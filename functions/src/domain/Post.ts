@@ -1,5 +1,4 @@
 import { Tag } from "./tag";
-
 export class Post {
   private _content: string;
   private _timeStamp: Date; // TODO: ISO型を作る
