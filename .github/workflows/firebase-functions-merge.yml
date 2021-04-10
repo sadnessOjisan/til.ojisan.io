@@ -9,9 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install npm packages
-        working-directory: ./functions
+        working-directory: ./packages/api
         run: |
-          npm install
+          yarn workspace api install
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
