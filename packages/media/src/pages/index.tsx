@@ -1,7 +1,8 @@
 import { GetStaticPropsResult } from "next";
 import Link from "next/link";
+import { PostsResponse } from "type/src/api/response/post-response";
 import { toPostFromResponse } from "../../types/model";
-import { isValidPostsResponse, PostsResponse } from "../../types/response";
+import { isValidPostsResponse } from "../../types/response";
 import { format } from "../util/date";
 import { getHost } from "../util/getHost";
 

@@ -1,9 +1,9 @@
 import * as functions from "firebase-functions";
 import { isValidRequestId } from "..";
-import { GetPostByIdForEditResponseType } from "../types/response/get-post-by-id-for-edit-response";
 import { allowCors } from "../util/cors";
 import { getPostModelByIdForEdit } from "../service/post/get-post-by-id";
 import { getPostAndTagName } from "../usecase/post/get-post-and-tag-name";
+import { PostForEditResponse } from "type/src/api/response/post-response";
 
 //   tilを一つedit用に取得(htmlに変換しない)
 export const getPostByIdForEdit = functions
@@ -23,6 +23,6 @@ export const getPostByIdForEdit = functions
       return;
     }
     const data = getPostAndTagName(post);
-    const responseContent: GetPostByIdForEditResponseType = data;
+    const responseContent: PostForEditResponse = data;
     response.status(200).json(responseContent);
   });

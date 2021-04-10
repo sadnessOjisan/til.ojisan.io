@@ -1,4 +1,4 @@
-import { PostResponse } from "./response";
+import { PostResponse } from "type/src/api/response/post-response";
 
 export type Post = {
   id: string;

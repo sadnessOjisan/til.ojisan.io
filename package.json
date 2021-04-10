@@ -16,7 +16,8 @@
   },
   "scripts": {
     "media": "yarn workspace media",
-    "api": "yarn workspace api"
+    "api": "yarn workspace api",
+    "typecheck": "tsc --noEmit"
   },
   "repository": {
     "type": "git",

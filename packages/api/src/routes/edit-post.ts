@@ -3,9 +3,9 @@ import * as admin from "firebase-admin";
 import { COLLECTION_KEY } from "../const/firestore-collection-key";
 import { TagFireStoreFieldType } from "../types/firestore/tag";
 import { PostFireStoreFieldType } from "../types/firestore/post";
-import { EditRequest } from "../types/request/edit-request";
 import { checkAdmin } from "../service/session/check-admin";
 import { allowCors } from "../util/cors";
+import { EditRequest } from "type/src/api/request/edit-post";
 
 // データベースの参照を作成
 const db = admin.firestore(); // TODO: fix to use bunri

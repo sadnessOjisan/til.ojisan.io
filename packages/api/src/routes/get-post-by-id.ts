@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
+import { GetPostByIdResponse } from "type/src/api/response/post-response";
 import { isValidRequestId } from "..";
-import { GetPostByIdResponse } from "../types/response/get-post-by-id-response";
 import { getPostByPid } from "../service/post/get-post-by-id";
 import { allowCors } from "../util/cors";
 
