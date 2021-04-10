@@ -8,7 +8,7 @@ import { checkAdmin } from "../service/session/checkAdmin";
 import { allowCors } from "../util/cors";
 
 // データベースの参照を作成
-const db = admin.firestore();
+const db = admin.firestore(); // TODO: fix to use bunri
 
 export const editPost = functions
   .region("asia-northeast1") // TODO: 関数の先頭は共通化できそう

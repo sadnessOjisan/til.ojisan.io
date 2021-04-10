@@ -5,7 +5,7 @@ import {
   getPostFieldById,
 } from "../../repository/post/getPostById";
 import { getTagsByRefs } from "../../repository/tag/get-tag-by-ref";
-import { Post } from "../../domain/Post";
+import { Post } from "../../domain/post";
 
 export const getPostByPid = async (pid: string) => {
   const post = await getPostById(pid);

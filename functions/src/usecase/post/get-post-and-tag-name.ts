@@ -1,4 +1,4 @@
-import { Post } from "../../domain/Post";
+import { Post } from "../../domain/post";
 
 export const getPostAndTagName = (post: Post) => {
   return {

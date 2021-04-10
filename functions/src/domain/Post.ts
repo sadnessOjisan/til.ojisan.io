@@ -1,4 +1,4 @@
-import { Tag } from "./Tag";
+import { Tag } from "./tag";
 
 export class Post {
   private _content: string;
