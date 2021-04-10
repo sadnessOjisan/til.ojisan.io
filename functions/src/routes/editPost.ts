@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
+import { COLLECTION_KEY } from "../const/firestore-collection-key";
 import { TagFireStoreFieldType } from "../types/firestore/tag";
 import { PostFireStoreFieldType } from "../types/firestore/post";
 import { EditRequest } from "../types/request/EditRequest";

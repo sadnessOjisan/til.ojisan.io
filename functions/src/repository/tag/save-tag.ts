@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-import { COLLECTION_KEY } from "../../const/FirestoreCollectionKey";
+import { COLLECTION_KEY } from "../../const/firestore-collection-key";
 import { TagFireStoreFieldType } from "../../types/firestore/tag";
 
 const db = admin.firestore();
