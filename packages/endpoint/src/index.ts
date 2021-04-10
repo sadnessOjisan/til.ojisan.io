@@ -3,4 +3,4 @@ export const ENDPOINT = {
   getAllPpostIds: "getAllPpostIds",
   getPostById: "getPostById",
   getAllShowablePosts: "getAllShowablePosts",
-} as const;
+};

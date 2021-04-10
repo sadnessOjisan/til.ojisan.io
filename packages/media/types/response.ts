@@ -27,8 +27,9 @@ export const isValidPostResponse = (
     console.error("data.timeStamp should be string");
     return false;
   }
-  if (data.show !== true) {
-    console.error("data.show should be true");
+  // TODO:   if (data.show !== true) { に書き換える
+  if (typeof data.show !== "boolean") {
+    console.error(`data.show should be boolean data.show:`, data.show);
     return false;
   }
   if (!Array.isArray(data.tags)) {
