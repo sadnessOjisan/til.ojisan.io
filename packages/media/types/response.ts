@@ -1,4 +1,5 @@
 import {
+  PostIdsResponse,
   PostResponse,
   PostsResponse,
 } from "type/src/api/response/post-response";
@@ -54,8 +55,6 @@ export const isValidPostsResponse = (posts: any): posts is PostsResponse => {
   }
   return true;
 };
-
-export type PostIdsResponse = string[];
 
 export const isValidPostIdsResponse = (
   paths: any

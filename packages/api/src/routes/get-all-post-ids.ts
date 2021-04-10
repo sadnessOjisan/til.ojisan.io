@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { GetAllPostIdsResponseType } from "../types/response/get-all-post-ids-response-type";
+import { PostIdsResponse } from "type/src/api/response/post-response";
 import { allowCors } from "../util/cors";
 import { getAllIds } from "../service/post/get-all-ids";
 
@@ -14,6 +14,6 @@ export const getAllPpostIds = functions
       response.status(500).json("firebase error");
       return;
     }
-    const resContent: GetAllPostIdsResponseType = ids;
+    const resContent: PostIdsResponse = ids;
     response.status(200).json(resContent);
   });
