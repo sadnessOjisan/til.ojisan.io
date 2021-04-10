@@ -34,4 +34,23 @@ export class Post {
   }) => {
     return new Post(arg);
   };
+
+  get content() {
+    return this._content;
+  }
+  get timeStamp() {
+    return this._timeStamp;
+  }
+  get id() {
+    return this._id;
+  }
+  get title() {
+    return this._title;
+  }
+  get tags() {
+    return this._tags;
+  }
+  get show() {
+    return this._show;
+  }
 }

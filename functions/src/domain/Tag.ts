@@ -20,4 +20,16 @@ export class Tag {
   }) => {
     return new Tag(arg);
   };
+
+  get name() {
+    return this._name;
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  get timeStamp() {
+    return this._timeStamp;
+  }
 }

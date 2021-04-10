@@ -2,12 +2,9 @@ import { Post } from "../../domain/Post";
 import { getAllPostsInOrder } from "../../repository/post/get-all-posts-in-order";
 import { getTagsByRefs } from "../../repository/tag/get-tag-by-ref";
 
-type Posts = Map<string, Post>;
-
 export const getAllPostsInNewOrder = async () => {
-  const postsMap: Posts = new Map();
   const posts = await getAllPostsInOrder("timeStamp", "desc");
-  posts.forEach(async (post) => {
+  const postAndTag = posts.map(async (post) => {
     const postTagRefs = post.tagRefs;
     const tags = await getTagsByRefs(postTagRefs);
     const validPost = Post.createPost({
@@ -16,7 +13,8 @@ export const getAllPostsInNewOrder = async () => {
       timeStamp: post.timeStamp.toDate(),
       show: post.show ?? false,
     });
-    postsMap.set(post.id, validPost);
+    return validPost;
   });
-  return postsMap;
+  const validPost = await Promise.all(postAndTag);
+  return validPost;
 };
