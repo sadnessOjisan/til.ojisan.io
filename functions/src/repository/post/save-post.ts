@@ -1,9 +1,6 @@
 import * as admin from "firebase-admin";
 import { COLLECTION_KEY } from "../../const/FirestoreCollectionKey";
-import {
-  PostFireStoreFieldType,
-  UpdatePostFireStoreFieldType,
-} from "../../types/firestore/post";
+import { PostFireStoreFieldType } from "../../types/firestore/post";
 
 const db = admin.firestore();
 

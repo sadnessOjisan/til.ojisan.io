@@ -1,16 +1,9 @@
 import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
 import { _isValidSaveRequestBody } from "..";
-import { TagFireStoreFieldType } from "../types/firestore/tag";
-import { PostFireStoreFieldType } from "../types/firestore/post";
 import { checkAdmin } from "../service/session/checkAdmin";
 import { allowCors } from "../util/cors";
 import { parseBody } from "../util/parse-body";
 import { savePost } from "../service/post/save-post";
-
-// データベースの参照を作成
-const db = admin.firestore();
 
 /**
  * TILの保存
