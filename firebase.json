@@ -5,7 +5,7 @@
   },
   "functions": {
     "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build:function",
-    "source": "packages/api/lib"
+    "source": "packages/api"
   },
   "hosting": {
     "public": "packages/media/out",
