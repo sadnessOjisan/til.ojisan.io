@@ -8,7 +8,7 @@ jobs:
       - name: Install npm packages
         working-directory: ./packages/api
         run: |
-          yarn workspace api install
+          yarn install
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
