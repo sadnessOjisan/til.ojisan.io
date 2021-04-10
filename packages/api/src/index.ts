@@ -5,7 +5,6 @@ import { safe_any_for_runtime_validation } from "type/src/util/any";
 
 admin.initializeApp(functions.config().firebase);
 
-export { saveTil } from "./routes/save-til";
 export { getAllPosts } from "./routes/get-all-posts";
 export { getAllShowablePosts } from "./routes/get-all-showable-posts";
 export { getPostById } from "./routes/get-post-by-id";
@@ -15,6 +14,7 @@ export { editPost } from "./routes/edit-post";
 export { deletePostById } from "./routes/delete-post-by-id";
 export { updateShowFlg } from "./routes/update-show";
 export { checkAdminOrNot } from "./routes/check-admin";
+export { saveTil } from "./routes/save-til";
 
 export const isValidRequestId = (
   data: safe_any_for_runtime_validation
