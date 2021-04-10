@@ -2,7 +2,7 @@ import { Tag } from "./Tag";
 
 export class Post {
   private _content: string;
-  private _timeStamp: string; // TODO: ISO型を作る
+  private _timeStamp: Date; // TODO: ISO型を作る
   private _id: string;
   private _title: string;
   private _tags: Tag[];
@@ -10,7 +10,7 @@ export class Post {
 
   private constructor(arg: {
     content: string;
-    timeStamp: string; // TODO: ISO型を作る
+    timeStamp: Date; // TODO: ISO型を作る
     id: string;
     title: string;
     tags: Tag[];
@@ -26,7 +26,7 @@ export class Post {
 
   static createPost = (arg: {
     content: string;
-    timeStamp: string; // TODO: ISO型を作る
+    timeStamp: Date; // TODO: ISO型を作る
     id: string;
     title: string;
     tags: Tag[];

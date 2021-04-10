@@ -1,7 +1,7 @@
 import * as admin from "firebase-admin";
 import { COLLECTION_KEY } from "../../const/FirestoreCollectionKey";
 import { isValidPostFireStoreFiledType } from "../../types/firestore/post";
-import { isValidTagFireStoreFieldType } from "../../types/firestore/tag";
+import { Post } from "../../domain/Post";
 
 const db = admin.firestore();
 
@@ -21,6 +21,7 @@ export const getAllPostsInOrder = async (
       console.error(`${JSON.stringify(post)} is invalid data.`);
       throw new Error("invalid data");
     }
-    return { id: doc.id, ...post };
+    const postJson = { id: doc.id, ...post };
+    return postJson;
   });
 };

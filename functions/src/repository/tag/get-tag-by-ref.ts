@@ -1,11 +1,6 @@
 import * as admin from "firebase-admin";
 import { isValidTagFireStoreFieldType } from "../../types/firestore/tag";
-
-type Tag = {
-  id: string;
-  name: string;
-  timestamp: FirebaseFirestore.FieldValue;
-};
+import { Tag } from "../../domain/Tag";
 
 export const getTagByRef = async (
   tagRef: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
@@ -19,9 +14,9 @@ export const getTagByRef = async (
   const tag = {
     id: tagDoc.id,
     name: tagData.name,
-    timestamp: tagData.timeStamp,
+    timeStamp: tagData.timeStamp.toDate(),
   };
-  return tag;
+  return Tag.createTag(tag);
 };
 
 export const getTagsByRefs = async (
