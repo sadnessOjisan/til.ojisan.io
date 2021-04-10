@@ -60,7 +60,7 @@ export const Edit = (props: { id: string }) => {
 
   useEffect(() => {
     setData({ isLoading: true, data: undefined, error: undefined });
-    fetch(`${getHost()}/${ENDPOINT.getAllShowablePosts}?id=${props.id}`)
+    fetch(`${getHost()}/${ENDPOINT.getPostByIdForEdit}?id=${props.id}`)
       .then((res) => {
         res.json().then((data) => {
           // TODO: validation

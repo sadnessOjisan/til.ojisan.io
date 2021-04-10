@@ -6,5 +6,5 @@ export const ENDPOINT = {
   checkAdminOrNot: "checkAdminOrNot",
   setShowFlg: "updateShowFlg",
   saveTil: "saveTil",
-  getPostByIdForEdit: getPostByIdForEdit,
+  getPostByIdForEdit: "getPostByIdForEdit",
 };
