@@ -1,17 +1,17 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { SaveRequestType } from "./types/request/SaveRequest";
+import { SaveRequestType } from "./types/request/save-request";
 
 admin.initializeApp(functions.config().firebase);
 
-export { saveTil } from "./routes/saveTil";
-export { getAllPosts } from "./routes/getAllPosts";
-export { getPostById } from "./routes/getPostById";
-export { getPostByIdForEdit } from "./routes/getPostByIdForEdit";
-export { getAllPpostIds } from "./routes/getAllPostIds";
-export { editPost } from "./routes/editPost";
-export { deletePostById } from "./routes/deletePostById";
-export { updateShowFlg } from "./routes/updateShow";
+export { saveTil } from "./routes/save-til";
+export { getAllPosts } from "./routes/get-all-posts";
+export { getPostById } from "./routes/get-post-by-id";
+export { getPostByIdForEdit } from "./routes/get-post-by-id-for-edit";
+export { getAllPpostIds } from "./routes/get-all-post-ids";
+export { editPost } from "./routes/edit-post";
+export { deletePostById } from "./routes/delete-post-by-id";
+export { updateShowFlg } from "./routes/update-show";
 export { checkAdminOrNot } from "./routes/check-admin";
 
 export const isValidRequestId = (data: any): data is string => {

@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { GetAllPostIdsResponseType } from "../types/response/GetAllPostIdsResponse";
+import { GetAllPostIdsResponseType } from "../types/response/get-all-post-ids-response-type";
 import { allowCors } from "../util/cors";
 import { getAllIds } from "../service/post/get-all-ids";
 

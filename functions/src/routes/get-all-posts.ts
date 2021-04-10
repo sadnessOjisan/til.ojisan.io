@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { GetAllPostResponseType } from "../types/response/GetAllPostsResponseType";
+import { GetAllPostResponseType } from "../types/response/get-all-post-response-type";
 import { allowCors } from "../util/cors";
 import { getAllPostsInNewOrder } from "../service/post/get-all-posts-in-new-order";
 import { getPostAndTagName } from "../usecase/post/get-post-and-tag-name";
