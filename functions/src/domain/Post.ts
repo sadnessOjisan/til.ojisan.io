@@ -30,9 +30,9 @@ export class Post {
     id: string;
     title: string;
     tags: Tag[];
-    show: boolean;
+    show?: boolean;
   }) => {
-    return new Post(arg);
+    return new Post({ ...arg, show: arg.show ?? false });
   };
 
   get content() {
