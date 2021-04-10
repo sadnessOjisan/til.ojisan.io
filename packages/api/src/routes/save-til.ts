@@ -41,7 +41,7 @@ export const saveTil = functions
     }
 
     try {
-      savePost(
+      await savePost(
         {
           title: parsedBody.title,
           content: parsedBody.content,

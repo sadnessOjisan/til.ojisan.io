@@ -17,5 +17,5 @@ export const savePost = async (post: Post, tagNames: string[]) => {
     return ref;
   });
   const refs = await Promise.all(tagRefs);
-  savePostAndTags({ ...post, timeStamp: new Date() }, refs);
+  await savePostAndTags({ ...post, timeStamp: new Date() }, refs);
 };
