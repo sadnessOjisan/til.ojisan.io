@@ -1,4 +1,4 @@
-import { Post } from "../../domain/post";
+import { Post } from "../../domain/Post";
 import { getAllPostsInOrder } from "../../repository/post/get-all-posts-in-order";
 import { getTagsByRefs } from "../../repository/tag/get-tag-by-ref";
 
