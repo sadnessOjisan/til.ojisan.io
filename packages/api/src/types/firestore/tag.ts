@@ -1,3 +1,5 @@
+import { safe_any_for_runtime_validation } from "type/src/util/any";
+
 export type TagFireStoreFieldType = {
   name: string;
   timeStamp: FirebaseFirestore.FieldValue;
@@ -9,7 +11,7 @@ export type TagFireStoreFieldResponseType = {
 };
 
 export const isValidTagFireStoreFieldType = (
-  data: any
+  data: safe_any_for_runtime_validation
 ): data is TagFireStoreFieldResponseType => {
   if (data === undefined || data === null) {
     console.error("data should be there");

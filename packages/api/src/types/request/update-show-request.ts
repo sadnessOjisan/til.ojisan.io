@@ -1,8 +1,9 @@
 import * as functions from "firebase-functions";
 import { UpdateShowRequestType } from "type/src/api/request/update-post";
+import { safe_any_for_runtime_validation } from "type/src/util/any";
 
 export const isValidUpdateShowRequest = (
-  data: any
+  data: safe_any_for_runtime_validation
 ): data is UpdateShowRequestType => {
   if (data === null || data === undefined) {
     functions.logger.error(

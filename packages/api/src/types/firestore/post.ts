@@ -1,3 +1,5 @@
+import { safe_any_for_runtime_validation } from "type/src/util/any";
+
 export type PostFireStoreFieldType = {
   title: string;
   content: string; // markdown
@@ -17,7 +19,7 @@ export type PostFireStoreFieldResponseType = {
 export type UpdatePostFireStoreFieldType = Partial<PostFireStoreFieldType>;
 
 export const isValidPostFireStoreFiledType = (
-  data: any
+  data: safe_any_for_runtime_validation
 ): data is PostFireStoreFieldResponseType => {
   console.info("data", data);
   if (data === undefined || data === null) {

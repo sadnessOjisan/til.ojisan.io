@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { SaveRequestType } from "type/src/api/request/save-post";
+import { safe_any_for_runtime_validation } from "type/src/util/any";
 
 admin.initializeApp(functions.config().firebase);
 
@@ -14,7 +15,9 @@ export { deletePostById } from "./routes/delete-post-by-id";
 export { updateShowFlg } from "./routes/update-show";
 export { checkAdminOrNot } from "./routes/check-admin";
 
-export const isValidRequestId = (data: any): data is string => {
+export const isValidRequestId = (
+  data: safe_any_for_runtime_validation
+): data is string => {
   if (data === undefined || data === null) {
     console.error("data should be there");
     return false;
@@ -26,7 +29,9 @@ export const isValidRequestId = (data: any): data is string => {
   return true;
 };
 
-export const _isValidSaveRequestBody = (body: any): body is SaveRequestType => {
+export const _isValidSaveRequestBody = (
+  body: safe_any_for_runtime_validation
+): body is SaveRequestType => {
   if (!body) {
     console.error("should not empty");
     return false;
