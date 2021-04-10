@@ -51,9 +51,13 @@ export const Root = () => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <View>
-              <Link href="/">admin</Link>
-            </View>
+            {
+              (
+                <View>
+                  <Link href="/">admin</Link>
+                </View>
+              ) as any
+            }
             <View>
               <Link href="/new">
                 <Add />

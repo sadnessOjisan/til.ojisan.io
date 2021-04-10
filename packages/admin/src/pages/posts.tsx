@@ -78,7 +78,7 @@ export const Posts = () => {
     <div>
       {data === undefined || data.isLoading ? (
         <Flex justifyContent="center">
-          <ProgressCircle aria-label="Loading…" isIndeterminate />
+          {(<ProgressCircle aria-label="Loading…" isIndeterminate />) as any}
         </Flex>
       ) : (
         data !== undefined &&
@@ -96,58 +96,77 @@ export const Posts = () => {
               marginY="12px"
             >
               <Flex alignItems="center">
-                <Switch
-                  onChange={(b: boolean) => handleCheckFlg(d.id, b)}
-                  defaultSelected={d.show}
-                />
+                {
+                  (
+                    <Switch
+                      onChange={(b: boolean) => handleCheckFlg(d.id, b)}
+                      defaultSelected={d.show}
+                    />
+                  ) as any
+                }
                 <Text marginX="4px">{dataString}</Text>
                 <Text marginX="4px">{d.title}</Text>
               </Flex>
-              <View>
-                <ActionButton
-                  onPress={() => {
-                    route(`/edit/${d.id}`);
-                  }}
-                  variant="cta"
-                >
-                  edit
-                </ActionButton>
-                <DialogTrigger>
-                  <ActionButton marginStart="8px" variant="negative">
-                    Delete
-                  </ActionButton>
-                  {(close: any) => (
-                    <Dialog>
-                      <Heading>削除しますか？</Heading>
-                      <Divider />
-                      <Content>
-                        <Text>Start speed test?</Text>
-                      </Content>
-                      <ButtonGroup>
-                        <Button variant="secondary" onPress={close}>
-                          Cancel
-                        </Button>
-                        <Button
-                          variant="cta"
-                          onPress={async () => {
-                            const token = await session?.getIdToken();
-                            fetch(`${getHost()}/${ENDPOINT.deletePostById}`, {
-                              method: "DELETE",
-                              headers: {
-                                Authorization: `Bearer ${token}`,
-                              },
-                              body: JSON.stringify({ id: d.id }),
-                            }).catch((e) => console.error(e));
-                            close();
-                          }}
-                        >
-                          Confirm
-                        </Button>
-                      </ButtonGroup>
-                    </Dialog>
-                  )}
-                </DialogTrigger>
-              </View>
+              {
+                (
+                  <View>
+                    <ActionButton
+                      onPress={() => {
+                        route(`/edit/${d.id}`);
+                      }}
+                      // @ts-ignore
+                      variant="cta"
+                    >
+                      edit
+                    </ActionButton>
+                    <DialogTrigger>
+                      {
+                        (
+                          // @ts-ignore
+                          <ActionButton marginStart="8px" variant="negative">
+                            Delete
+                          </ActionButton>
+                        ) as any
+                      }
+                      {(close: any) =>
+                        (
+                          <Dialog>
+                            <Heading>削除しますか？</Heading>
+                            <Divider />
+                            <Content>
+                              <Text>Start speed test?</Text>
+                            </Content>
+                            <ButtonGroup>
+                              <Button variant="secondary" onPress={close}>
+                                Cancel
+                              </Button>
+                              <Button
+                                variant="cta"
+                                onPress={async () => {
+                                  const token = await session?.getIdToken();
+                                  fetch(
+                                    `${getHost()}/${ENDPOINT.deletePostById}`,
+                                    {
+                                      method: "DELETE",
+                                      headers: {
+                                        Authorization: `Bearer ${token}`,
+                                      },
+                                      body: JSON.stringify({ id: d.id }),
+                                    }
+                                  ).catch((e) => console.error(e));
+                                  close();
+                                }}
+                              >
+                                Confirm
+                              </Button>
+                            </ButtonGroup>
+                          </Dialog>
+                        ) as any
+                      }
+                    </DialogTrigger>
+                  </View>
+                ) as any
+              }
             </Flex>
           );
         })
