@@ -1,11 +1,7 @@
-export type PostResponse = {
-  id: string;
-  title: string;
-  content: string;
-  timeStamp: string;
-  tags: string[];
-  show: true;
-};
+import {
+  PostResponse,
+  PostsResponse,
+} from "type/src/api/response/post-response";
 
 export const isValidPostResponse = (data: any): data is PostResponse => {
   if (data === undefined || data === null) {
@@ -44,8 +40,6 @@ export const isValidPostResponse = (data: any): data is PostResponse => {
   }
   return true;
 };
-
-export type PostsResponse = PostResponse[];
 
 export const isValidPostsResponse = (posts: any): posts is PostsResponse => {
   if (!Array.isArray(posts)) {
