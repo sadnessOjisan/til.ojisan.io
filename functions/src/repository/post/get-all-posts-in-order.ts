@@ -1,7 +1,6 @@
 import * as admin from "firebase-admin";
 import { COLLECTION_KEY } from "../../const/FirestoreCollectionKey";
 import { isValidPostFireStoreFiledType } from "../../types/firestore/post";
-import { Post } from "../../domain/Post";
 
 const db = admin.firestore();
 

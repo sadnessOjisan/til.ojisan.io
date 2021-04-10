@@ -1,4 +1,3 @@
-import * as admin from "firebase-admin";
 import { isValidTagFireStoreFieldType } from "../../types/firestore/tag";
 import { Tag } from "../../domain/Tag";
 

@@ -1,5 +1,4 @@
 import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
 import { GetAllPostResponseType } from "../types/response/GetAllPostsResponseType";
 import { allowCors } from "../util/cors";
 import { getAllPostsInNewOrder } from "../service/post/get-all-posts-in-new-order";
