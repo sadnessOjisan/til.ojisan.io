@@ -10,6 +10,14 @@
 - admin repository
   - https://github.com/sadnessOjisan/til.ojisan.io-admin
 
+## dev
+
+```sh
+yarn workspace media install
+
+yarn workspace media run dev
+```
+
 ## env
 
 - admin_user_id
