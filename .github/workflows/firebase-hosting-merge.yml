@@ -11,11 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
       - name: yarn install
-        working-directory: ./packages/media
         run: |
           yarn install
-      - run: yarn workspace media run build:prd
+      - name: yarn build
+        working-directory: ./packages/media
+        run: |
+          yarn run build:prd
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
