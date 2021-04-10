@@ -1,9 +1,5 @@
 import * as functions from "firebase-functions";
-
-export type UpdateShowRequestType = {
-  post_id: string;
-  show: boolean;
-};
+import { UpdateShowRequestType } from "type/src/api/request/update-post";
 
 export const isValidUpdateShowRequest = (
   data: any
