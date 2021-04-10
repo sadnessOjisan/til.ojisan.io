@@ -1,14 +1,11 @@
 import * as functions from "firebase-functions";
-import { _isValidSaveRequestBody } from "..";
-import { checkAdmin } from "../service/session/checkAdmin";
+import { checkAdmin } from "../service/session/check-admin";
 import { allowCors } from "../util/cors";
+import { deletePost } from "../service/post/delete-post";
+import { isValidDeleteRequestBody } from "../types/request/delete-request";
 import { parseBody } from "../util/parse-body";
-import { savePost } from "../service/post/save-post";
 
-/**
- * TILの保存
- */
-export const saveTil = functions
+export const deletePostById = functions
   .region("asia-northeast1") // TODO: 関数の先頭は共通化できそう
   .https.onRequest(async (request, response) => {
     allowCors(response);
@@ -16,7 +13,7 @@ export const saveTil = functions
       response.status(204).send("");
       return;
     }
-    if (request.method !== "POST") {
+    if (request.method !== "DELETE") {
       response
         .status(400)
         .json({ error: `${request.method} is invalid method` });
@@ -27,31 +24,24 @@ export const saveTil = functions
       response.status(401).json({ error: "please login" });
       return;
     }
-    let parsedBody: any;
+    let parsedBody;
     try {
       parsedBody = parseBody(request.body);
     } catch (e) {
       response.status(400).json({ error: `${request.body} cannot parse` });
       return;
     }
-    if (!_isValidSaveRequestBody(parsedBody)) {
-      console.error(`${JSON.stringify(request.body)} is invalid request`);
+
+    if (!isValidDeleteRequestBody(parsedBody)) {
       response.status(400).json({ error: "invalid request" });
       return;
     }
 
+    // post の削除
     try {
-      savePost(
-        {
-          title: parsedBody.title,
-          content: parsedBody.content,
-        },
-        parsedBody.tags
-      );
+      await deletePost(parsedBody.id);
+      response.status(200).json("success"); // TODO: should return 204
     } catch (e) {
-      response.status(200).json("fail save");
-      return;
+      response.status(500).json({ error: "fail to save post" });
     }
-
-    response.status(200).json("success");
   });

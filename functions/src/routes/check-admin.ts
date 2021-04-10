@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { checkAdmin } from "../service/session/checkAdmin";
+import { checkAdmin } from "../service/session/check-admin";
 import { allowCors } from "../util/cors";
 
 // update

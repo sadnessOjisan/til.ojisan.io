@@ -1,14 +1,14 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { COLLECTION_KEY } from "../const/FirestoreCollectionKey";
+import { COLLECTION_KEY } from "../const/firestore-collection-key";
 import { TagFireStoreFieldType } from "../types/firestore/tag";
 import { PostFireStoreFieldType } from "../types/firestore/post";
-import { EditRequest } from "../types/request/EditRequest";
-import { checkAdmin } from "../service/session/checkAdmin";
+import { EditRequest } from "../types/request/edit-request";
+import { checkAdmin } from "../service/session/check-admin";
 import { allowCors } from "../util/cors";
 
 // データベースの参照を作成
-const db = admin.firestore();
+const db = admin.firestore(); // TODO: fix to use bunri
 
 export const editPost = functions
   .region("asia-northeast1") // TODO: 関数の先頭は共通化できそう

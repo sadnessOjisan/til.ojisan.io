@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
-import { updateShow } from "../service/post/updateShowFlg";
-import { checkAdmin } from "../service/session/checkAdmin";
+import { updateShow } from "../service/post/update-show-flg";
+import { checkAdmin } from "../service/session/check-admin";
 import { isValidUpdateShowRequest } from "../types/request/update-show-request";
 import { allowCors } from "../util/cors";
 

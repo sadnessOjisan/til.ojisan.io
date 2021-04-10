@@ -1,10 +1,15 @@
 import * as admin from "firebase-admin";
-import { COLLECTION_KEY } from "../../const/FirestoreCollectionKey";
+import { COLLECTION_KEY } from "../../const/firestore-collection-key";
 import { isValidPostFireStoreFiledType } from "../../types/firestore/post";
 import { isValidTagFireStoreFieldType } from "../../types/firestore/tag";
 
 const db = admin.firestore();
 
+/**
+ * 指定したpostをtagと紐付け手取得する
+ * @param pid post id
+ * @returns post + tag
+ */
 export const getPostById = async (pid: string) => {
   const doc = await db.collection(COLLECTION_KEY.POSTS).doc(pid).get();
   const postField = doc.data();

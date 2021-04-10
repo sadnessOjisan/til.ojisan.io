@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import { isValidRequestId } from "..";
-import { GetPostByIdResponse } from "../types/response/GetPostByIdResponse";
-import { getPostByPid } from "../service/post/getPostById";
+import { GetPostByIdResponse } from "../types/response/get-post-by-id-response";
+import { getPostByPid } from "../service/post/get-post-by-id";
 import { allowCors } from "../util/cors";
 
 //   tilを一つ取得

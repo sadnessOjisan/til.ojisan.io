@@ -3,9 +3,9 @@ import * as marked from "marked";
 import {
   getPostById,
   getPostFieldById,
-} from "../../repository/post/getPostById";
+} from "../../repository/post/get-post-by-id";
 import { getTagsByRefs } from "../../repository/tag/get-tag-by-ref";
-import { Post } from "../../domain/Post";
+import { Post } from "../../domain/post";
 
 export const getPostByPid = async (pid: string) => {
   const post = await getPostById(pid);

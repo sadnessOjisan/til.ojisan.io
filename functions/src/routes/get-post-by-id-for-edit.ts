@@ -1,8 +1,8 @@
 import * as functions from "firebase-functions";
 import { isValidRequestId } from "..";
-import { GetPostByIdForEditResponseType } from "../types/response/GetPostByIdForEditResponse";
+import { GetPostByIdForEditResponseType } from "../types/response/get-post-by-id-for-edit-response";
 import { allowCors } from "../util/cors";
-import { getPostModelByIdForEdit } from "../service/post/getPostById";
+import { getPostModelByIdForEdit } from "../service/post/get-post-by-id";
 import { getPostAndTagName } from "../usecase/post/get-post-and-tag-name";
 
 //   tilを一つedit用に取得(htmlに変換しない)

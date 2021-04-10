@@ -1,5 +1,4 @@
-import { Tag } from "./Tag";
-
+import { Tag } from "./tag";
 export class Post {
   private _content: string;
   private _timeStamp: Date; // TODO: ISO型を作る
@@ -7,7 +6,6 @@ export class Post {
   private _title: string;
   private _tags: Tag[];
   private _show: boolean;
-
   private constructor(arg: {
     content: string;
     timeStamp: Date; // TODO: ISO型を作る
@@ -23,7 +21,6 @@ export class Post {
     this._tags = arg.tags;
     this._show = arg.show;
   }
-
   static createPost = (arg: {
     content: string;
     timeStamp: Date; // TODO: ISO型を作る
@@ -34,7 +31,6 @@ export class Post {
   }) => {
     return new Post({ ...arg, show: arg.show ?? false });
   };
-
   get content() {
     return this._content;
   }

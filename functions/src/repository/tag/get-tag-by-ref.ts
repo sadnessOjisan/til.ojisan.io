@@ -1,5 +1,5 @@
 import { isValidTagFireStoreFieldType } from "../../types/firestore/tag";
-import { Tag } from "../../domain/Tag";
+import { Tag } from "../../domain/tag";
 
 export const getTagByRef = async (
   tagRef: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>

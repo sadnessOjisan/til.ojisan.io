@@ -1,11 +1,14 @@
 import * as functions from "firebase-functions";
-import { checkAdmin } from "../service/session/checkAdmin";
+import { _isValidSaveRequestBody } from "..";
+import { checkAdmin } from "../service/session/check-admin";
 import { allowCors } from "../util/cors";
-import { deletePost } from "../service/post/delete-post";
-import { isValidDeleteRequestBody } from "../types/request/delete-request";
 import { parseBody } from "../util/parse-body";
+import { savePost } from "../service/post/save-post";
 
-export const deletePostById = functions
+/**
+ * TILの保存
+ */
+export const saveTil = functions
   .region("asia-northeast1") // TODO: 関数の先頭は共通化できそう
   .https.onRequest(async (request, response) => {
     allowCors(response);
@@ -13,7 +16,7 @@ export const deletePostById = functions
       response.status(204).send("");
       return;
     }
-    if (request.method !== "DELETE") {
+    if (request.method !== "POST") {
       response
         .status(400)
         .json({ error: `${request.method} is invalid method` });
@@ -24,24 +27,31 @@ export const deletePostById = functions
       response.status(401).json({ error: "please login" });
       return;
     }
-    let parsedBody;
+    let parsedBody: any;
     try {
       parsedBody = parseBody(request.body);
     } catch (e) {
       response.status(400).json({ error: `${request.body} cannot parse` });
       return;
     }
-
-    if (!isValidDeleteRequestBody(parsedBody)) {
+    if (!_isValidSaveRequestBody(parsedBody)) {
+      console.error(`${JSON.stringify(request.body)} is invalid request`);
       response.status(400).json({ error: "invalid request" });
       return;
     }
 
-    // post の削除
     try {
-      await deletePost(parsedBody.id);
-      response.status(200).json("success"); // TODO: should return 204
+      savePost(
+        {
+          title: parsedBody.title,
+          content: parsedBody.content,
+        },
+        parsedBody.tags
+      );
     } catch (e) {
-      response.status(500).json({ error: "fail to save post" });
+      response.status(200).json("fail save");
+      return;
     }
+
+    response.status(200).json("success");
   });
