@@ -10,7 +10,7 @@ export type TagFireStoreFieldResponseType = {
 
 export const isValidTagFireStoreFieldType = (
   data: any
-): data is TagFireStoreFieldType => {
+): data is TagFireStoreFieldResponseType => {
   if (data === undefined || data === null) {
     console.error("data should be there");
     return false;

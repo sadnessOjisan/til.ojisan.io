@@ -35,3 +35,13 @@ export const getPostById = async (pid: string) => {
   });
   return post;
 };
+
+export const getPostFieldById = async (pid: string) => {
+  const doc = await db.collection(COLLECTION_KEY.POSTS).doc(pid).get();
+  const postField = doc.data();
+  if (!isValidPostFireStoreFiledType(postField)) {
+    console.error(`${JSON.stringify(postField)} is invalid data.`);
+    throw new Error("invalid data");
+  }
+  return { ...postField, id: doc.id };
+};
