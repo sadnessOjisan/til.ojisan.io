@@ -10,6 +10,14 @@
 - admin repository
   - https://github.com/sadnessOjisan/til.ojisan.io-admin
 
+## deploy
+
+```sh
+BUILD_ENV=development yarn run admin build
+
+BUILD_ENV=production yarn run admin build
+```
+
 ## dev
 
 ```sh
