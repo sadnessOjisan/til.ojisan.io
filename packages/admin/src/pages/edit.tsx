@@ -113,11 +113,15 @@ export const Edit = (props: { id: string }) => {
     <View padding="size-250">
       {getState === undefined || getState.isLoading ? (
         <Flex justifyContent="center">
-          <ProgressCircle aria-label="Loading…" isIndeterminate />
+          {(<ProgressCircle aria-label="Loading…" isIndeterminate />) as any}
         </Flex>
       ) : (
         <Form onSubmit={handleSubmit} isRequired>
-          <TextField label="title" onChange={setTitle} value={title} />
+          {
+            (
+              <TextField label="title" onChange={setTitle} value={title} />
+            ) as any
+          }
           <TextField label="tags" onChange={setTags} value={tags} />
           <TextArea
             label="content"

@@ -77,7 +77,7 @@ export const New = () => {
   return (
     <View padding="size-250">
       <Form onSubmit={handleSubmit} isRequired>
-        <TextField label="title" onChange={setTitle} value={title} />
+        {(<TextField label="title" onChange={setTitle} value={title} />) as any}
         <TextField label="tags" onChange={setTags} value={tags} />
         <TextArea label="content" onChange={setTil} height="60vh" value={til} />
         <Button
