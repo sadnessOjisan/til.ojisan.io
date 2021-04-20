@@ -3,24 +3,14 @@
   "background_color": "#3b35f6",
   "display": "standalone",
   "scope": "/",
-  "start_url": "https://vibrant-kalam-7045db.netlify.app",
-  "name": "til.ojisan.io-admin",
+  "start_url": "https://admin.til.ojisan.io",
+  "name": "admin.til.ojisan.io",
   "short_name": "til-admin",
   "description": "admin view for til.ojisan.io",
   "icons": [
     {
       "src": "icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-256x256.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-384x384.png",
-      "sizes": "384x384",
       "type": "image/png"
     },
     {
