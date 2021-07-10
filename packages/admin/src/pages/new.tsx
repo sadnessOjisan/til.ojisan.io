@@ -79,7 +79,14 @@ export const New = () => {
       <Form onSubmit={handleSubmit} isRequired>
         {(<TextField label="title" onChange={setTitle} value={title} />) as any}
         <TextField label="tags" onChange={setTags} value={tags} />
-        <TextArea label="content" onChange={setTil} height="60vh" value={til} />
+        <label>Til</label>
+        <textarea
+          label="content"
+          onChange={(e) => setTil((e.target as any).value)}
+          cols={40}
+          style={{ height: 300, padding: 8 }}
+          value={til}
+        />
         <Button
           type="submit"
           variant="cta"

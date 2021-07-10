@@ -18,6 +18,7 @@
     "media": "yarn workspace media",
     "api": "yarn workspace api",
     "admin": "yarn workspace admin",
+    "admin:dev": "yarn admin dev",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
